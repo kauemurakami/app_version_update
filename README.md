@@ -2,6 +2,7 @@ Retrieve version and url for local app update against store app
 Android and iOS
 
 ## Features
+ Using as reference packages like [in_app_update](https://pub.dev/packages/in_app_update) , [version_check](https://pub.dev/packages/version_check).
 
 Compares local version with the respective store version for the purpose of detecting user-side version updates.
 

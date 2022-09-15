@@ -1,5 +1,5 @@
 name: app_version_update
-description: An easy and quick way to check if the local app is updated with the same version in their respective stores (Play Store / Apple Store ). Using as reference packages like [in_app_update](https://pub.dev/packages/in_app_update) , [version_check](https://pub.dev/packages/version_check).
+description: An easy and quick way to check if the local app is updated with the same version in their respective stores (Play Store / Apple Store ).
 
 version: 0.0.1
 homepage: https://github.com/kauemurakami/app_version_update
