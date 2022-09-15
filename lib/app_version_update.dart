@@ -10,9 +10,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 
 import 'core/values/consts/consts.dart';
 
-/// A Calculator.
 class AppVersionUpdate {
-  /// Returns [value] plus 1.
   static Future<AppVersionResult> checkForUpdates(
       {String? appleId, String? playStoreId, String? country = 'us'}) async {
     final packageInfo = await PackageInfo.fromPlatform();

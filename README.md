@@ -6,6 +6,8 @@ Android and iOS
 
 Compares local version with the respective store version for the purpose of detecting user-side version updates.
 
+
+
 ## Getting started
 
 ```
