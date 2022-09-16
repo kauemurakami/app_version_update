@@ -13,3 +13,4 @@
 ## 0.2.0
 
 * Fix Verification local app version
+* Add canUpdate var in AppVersionResult

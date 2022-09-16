@@ -30,12 +30,16 @@ await AppVersionUpdate.checkForUpdates(
         .then((data) async {
             print(data.storeUrl);
             print(data.storeVersion);
-            //showDialog(... your custom widgets view) 
-            //or use our widgets
-            AppVersionUpdate.showAlertUpdate(
-            appVersionResult: data, context: context);
+            if(data.canUpdate!){
+              //showDialog(... your custom widgets view) 
+              //or use our widgets
+              AppVersionUpdate.showAlertUpdate(
+              appVersionResult: data, context: context);
+            }
          });
 ```
+
+Customize the Alert Dialog
 
 ```dart
 // you also have some options to customize our Alert Dialog 
