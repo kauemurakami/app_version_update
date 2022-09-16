@@ -44,22 +44,22 @@ Customize the Alert Dialog
 ```dart
 // you also have some options to customize our Alert Dialog 
 // ShowModalType.alert_dialog
-showAlertUpdate({
+AppUpdateVersion.showAlertUpdate({
     @required AppVersionResult? appVersionResult,
     @required BuildContext? context,
-    String? title = 'New version available',
-    String? content = 'Would you like to update your application?',
-    String? cancelButtonText = 'Update later',
-    String? updateButtonText = 'Update',
-    modalType = ShowModalType.alert_dialog,
-    Color? backgroundColor = Colors.white,
-    TextStyle? cancelTextStyle = const TextStyle(color: Colors.red),
-    TextStyle? updateTextStyle = const TextStyle(color: Colors.green),
-    TextStyle? titleTextStyle =
+    String? title, //default 'New version available',
+    String? content, //default'Would you like to update your application?',
+    String? cancelButtonText, //default'Update later',
+    String? updateButtonText, //default 'Update',
+    ShowModalType? modalType, //default ShowModalType.alert_dialog, unique its working in momnet
+    Color? backgroundColor , //default Colors.white,
+    TextStyle? cancelTextStyle, //default const TextStyle(color: Colors.red),
+    TextStyle? updateTextStyle , //default const TextStyle(color: Colors.green),
+    TextStyle? titleTextStyle , //default
         const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),
-    TextStyle? contentTextStyle,
-    ButtonStyle? cancelButtonStyle,
-    ButtonStyle? updateButtonStyle,
+    TextStyle? contentTextStyle , //default null,
+    ButtonStyle? cancelButtonStyle , //default null ,
+    ButtonStyle? updateButtonStyle , //default null,
   })
   // ShowModalType.bottom_sheet (available soon )
   // ShowModalType.page (available soon )

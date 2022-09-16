@@ -73,7 +73,7 @@ class AppVersionUpdate {
     String? content = 'Would you like to update your application?',
     String? cancelButtonText = 'Update later',
     String? updateButtonText = 'Update',
-    modalType = ShowModalType.alert_dialog,
+    ShowModalType? modalType = ShowModalType.alert_dialog,
     Color? backgroundColor = Colors.white,
     TextStyle? cancelTextStyle = const TextStyle(color: Colors.red),
     TextStyle? updateTextStyle = const TextStyle(color: Colors.green),
