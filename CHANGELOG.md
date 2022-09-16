@@ -14,3 +14,7 @@
 
 * Fix Verification local app version
 * Add canUpdate var in AppVersionResult
+
+## 0.3.0
+
+* Add ShowTypeModel for types the ours widget
