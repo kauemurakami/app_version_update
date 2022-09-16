@@ -5,12 +5,9 @@ import 'dart:io';
 import 'package:app_version_update/data/enums/app_version_widgets.dart';
 import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:app_version_update/widgets/alert_dialog_update.dart';
-import 'package:app_version_update/widgets/page_update.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'core/values/consts/consts.dart';
 
@@ -78,10 +75,10 @@ class AppVersionUpdate {
     String? updateButtonText = 'Update',
     modalType = ShowModalType.alert_dialog,
     Color? backgroundColor = Colors.white,
-    TextStyle? textStyleCancelButton = const TextStyle(color: Colors.red),
-    TextStyle? textStyleUpdateButtonconst =
-        const TextStyle(color: Colors.green),
-    TextStyle? titleTextStyle,
+    TextStyle? cancelTextStyle = const TextStyle(color: Colors.red),
+    TextStyle? updateTextStyle = const TextStyle(color: Colors.green),
+    TextStyle? titleTextStyle =
+        const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w700),
     TextStyle? contentTextStyle,
     ButtonStyle? cancelButtonStyle,
     ButtonStyle? updateButtonStyle,
@@ -94,6 +91,8 @@ class AppVersionUpdate {
                 title: title,
                 titleTextStyle: titleTextStyle,
                 content: content,
+                cancelTextStyle: cancelTextStyle,
+                updateTextStyle: updateTextStyle,
                 contentTextStyle: contentTextStyle,
                 backgroundColor: backgroundColor,
                 cancelButtonText: cancelButtonText,

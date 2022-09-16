@@ -53,10 +53,10 @@ showAlertUpdate({
     String? updateButtonText = 'Update',
     modalType = ShowModalType.alert_dialog,
     Color? backgroundColor = Colors.white,
-    TextStyle? textStyleCancelButton = const TextStyle(color: Colors.red),
-    TextStyle? textStyleUpdateButtonconst =
-        const TextStyle(color: Colors.green),
-    TextStyle? titleTextStyle,
+    TextStyle? cancelTextStyle = const TextStyle(color: Colors.red),
+    TextStyle? updateTextStyle = const TextStyle(color: Colors.green),
+    TextStyle? titleTextStyle =
+        const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),
     TextStyle? contentTextStyle,
     ButtonStyle? cancelButtonStyle,
     ButtonStyle? updateButtonStyle,

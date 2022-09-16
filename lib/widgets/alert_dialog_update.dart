@@ -13,6 +13,8 @@ class UpdateVersionDialog extends Container {
   Color? backgroundColor;
   TextStyle? titleTextStyle;
   TextStyle? contentTextStyle;
+  TextStyle? cancelTextStyle;
+  TextStyle? updateTextStyle;
 
   UpdateVersionDialog(
       {this.title,
@@ -20,19 +22,39 @@ class UpdateVersionDialog extends Container {
       this.updateButtonText,
       this.cancelButtonText,
       this.updateButtonStyle,
+      this.updateTextStyle,
       this.appVersionResult,
       this.backgroundColor,
       this.cancelButtonStyle,
+      this.cancelTextStyle,
       this.contentTextStyle,
-      this.titleTextStyle,
+      this.titleTextStyle =
+          const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),
       Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(title!),
-      content: Text(content!),
+      title: Text(
+        title!,
+        style: titleTextStyle,
+      ),
+      contentPadding: const EdgeInsets.only(top: 16.0),
+      content: FractionallySizedBox(
+        widthFactor: .8,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Flexible(
+                child: Text(
+              content!,
+              maxLines: 4,
+              style: contentTextStyle,
+            )),
+          ],
+        ),
+      ),
       backgroundColor: backgroundColor,
       titleTextStyle: titleTextStyle,
       contentTextStyle: contentTextStyle,
@@ -40,12 +62,18 @@ class UpdateVersionDialog extends Container {
         TextButton(
             style: cancelButtonStyle,
             onPressed: () => Navigator.pop(context),
-            child: Text(cancelButtonText!)),
+            child: Text(
+              cancelButtonText!,
+              style: cancelTextStyle,
+            )),
         TextButton(
             style: updateButtonStyle,
             onPressed: () => launchUrl(Uri.parse(appVersionResult!.storeUrl!),
                 mode: LaunchMode.externalApplication),
-            child: Text(updateButtonText!))
+            child: Text(
+              updateButtonText!,
+              style: updateTextStyle,
+            ))
       ],
     );
   }
