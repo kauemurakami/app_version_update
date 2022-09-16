@@ -19,6 +19,10 @@ dependencies:
   app_version_update: <latest>
 ```
 
+to use this app you need to have the app hosted in stores.
+
+To test, you can manually downgrade your pubspec.yaml from your ```version:``` , when you run your ```local version``` it will be different from the ```store version```
+
 ## Usage
 
 ```dart
@@ -47,19 +51,19 @@ Customize the Alert Dialog
 AppUpdateVersion.showAlertUpdate({
     @required AppVersionResult? appVersionResult,
     @required BuildContext? context,
-    String? title, //default 'New version available',
-    String? content, //default'Would you like to update your application?',
-    String? cancelButtonText, //default'Update later',
-    String? updateButtonText, //default 'Update',
-    ShowModalType? modalType, //default ShowModalType.alert_dialog, unique its working in momnet
-    Color? backgroundColor , //default Colors.white,
-    TextStyle? cancelTextStyle, //default const TextStyle(color: Colors.red),
-    TextStyle? updateTextStyle , //default const TextStyle(color: Colors.green),
-    TextStyle? titleTextStyle , //default
+    String? title, = 'New version available',
+    String? content = 'Would you like to update your application?',
+    String? cancelButtonText = 'Update later',
+    String? updateButtonText = 'Update',
+    ShowModalType? modalType = ShowModalType.alert_dialog,
+    Color? backgroundColor = Colors.white,
+    TextStyle? cancelTextStyle = const TextStyle(color: Colors.red),
+    TextStyle? updateTextStyle = const TextStyle(color: Colors.green),
+    TextStyle? titleTextStyle =
         const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),
-    TextStyle? contentTextStyle , //default null,
-    ButtonStyle? cancelButtonStyle , //default null ,
-    ButtonStyle? updateButtonStyle , //default null,
+    TextStyle? contentTextStyle,
+    ButtonStyle? cancelButtonStyle,
+    ButtonStyle? updateButtonStyle,
   })
   // ShowModalType.bottom_sheet (available soon )
   // ShowModalType.page (available soon )

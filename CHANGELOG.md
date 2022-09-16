@@ -18,3 +18,11 @@
 ## 0.3.0
 
 * Add ShowTypeModel for types the ours widget
+
+# 0.3.1
+
+* Add change log
+
+# 0.3.2
+
+* Teste description for use
