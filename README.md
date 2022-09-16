@@ -6,7 +6,7 @@ Android and iOS
 
 Compares local version with the respective store version for the purpose of detecting user-side version updates.
 
-
+It also provides widgets like dialog , bottom sheets and pages for you to display the update option to the user.
 
 ## Getting started
 
