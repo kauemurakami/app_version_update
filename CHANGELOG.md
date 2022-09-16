@@ -26,3 +26,8 @@
 # 0.3.2
 
 * Teste description for use
+* refact immutable widget
+
+# 0.3.3
+
+* Format files with flutter format 
