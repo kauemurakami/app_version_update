@@ -9,3 +9,7 @@
 ## 0.1.1
 
 * Updating features
+
+## 0.2.0
+
+* Fix Verification local app version

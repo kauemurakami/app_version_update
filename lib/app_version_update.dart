@@ -30,6 +30,12 @@ class AppVersionUpdate {
       final response =
           await http.get(uri, headers: headers).catchError((e) => throw e);
       AppVersionResult appVersionResult = AppVersionResult(
+          canUpdate: RegExp(r',\[\[\["([0-9,\.]*)"]],')
+                      .firstMatch(response.body)!
+                      .group(1) ==
+                  packageInfo.version
+              ? false
+              : true,
           storeUrl: uri.toString(),
           storeVersion: RegExp(r',\[\[\["([0-9,\.]*)"]],')
               .firstMatch(response.body)!
@@ -50,6 +56,9 @@ class AppVersionUpdate {
       final _json = json.decode(response.body);
       final List results = _json['results'];
       final appVersionResult = AppVersionResult(
+          canUpdate: _json['results'].first['version'] == packageInfo.version
+              ? false
+              : true,
           storeUrl: _json['results'].first['trackViewUrl'],
           storeVersion: _json['results'].first['version'],
           platform: TargetPlatform.iOS);
@@ -78,7 +87,7 @@ class AppVersionUpdate {
     ButtonStyle? updateButtonStyle,
   }) async {
     if (modalType == ShowModalType.alert_dialog) {
-      showDialog(
+      await showDialog(
           context: context!,
           builder: (context) => UpdateVersionDialog(
                 appVersionResult: appVersionResult,
