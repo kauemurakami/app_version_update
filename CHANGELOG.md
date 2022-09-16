@@ -1,3 +1,11 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+* Initial update
+
+## 0.1.0 
+
+* Providing alert dialog widget to display update option to user, directing him to the respective store
+
+## 0.1.1
+
+* Updating features

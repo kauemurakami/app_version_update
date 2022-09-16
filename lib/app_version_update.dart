@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:app_version_update/data/enums/app_version_widgets.dart';
 import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:app_version_update/widgets/alert_dialog_update.dart';
-import 'package:app_version_update/widgets/page.dart';
+import 'package:app_version_update/widgets/page_update.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
