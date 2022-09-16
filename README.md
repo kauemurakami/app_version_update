@@ -30,8 +30,35 @@ await AppVersionUpdate.checkForUpdates(
         .then((data) async {
             print(data.storeUrl);
             print(data.storeVersion);
-            showAlertDialog(...);
+            //showDialog(... your custom widgets view) 
+            //or use our widgets
+            AppVersionUpdate.showAlertUpdate(
+            appVersionResult: data, context: context);
          });
+```
+
+```dart
+// you also have some options to customize our Alert Dialog 
+// ShowModalType.alert_dialog
+showAlertUpdate({
+    @required AppVersionResult? appVersionResult,
+    @required BuildContext? context,
+    String? title = 'New version available',
+    String? content = 'Would you like to update your application?',
+    String? cancelButtonText = 'Update later',
+    String? updateButtonText = 'Update',
+    modalType = ShowModalType.alert_dialog,
+    Color? backgroundColor = Colors.white,
+    TextStyle? textStyleCancelButton = const TextStyle(color: Colors.red),
+    TextStyle? textStyleUpdateButtonconst =
+        const TextStyle(color: Colors.green),
+    TextStyle? titleTextStyle,
+    TextStyle? contentTextStyle,
+    ButtonStyle? cancelButtonStyle,
+    ButtonStyle? updateButtonStyle,
+  })
+  // ShowModalType.bottom_sheet (available soon )
+  // ShowModalType.page (available soon )
 ```
 
 ## Additional information
