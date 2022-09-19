@@ -54,3 +54,7 @@
 
 ## 1.0.1
 * Fixing Avoid using unnecessary statements..
+
+## 1.0.2
+* Fixing Avoid using unnecessary statements..
+* Fixing pubdev docs
