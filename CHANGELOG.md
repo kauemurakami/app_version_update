@@ -19,23 +19,27 @@
 
 * Add ShowTypeModel for types the ours widget
 
-# 0.3.1
+## 0.3.1
 
 * Add change log
 
-# 0.3.2
+## 0.3.2
 
 * Teste description for use
 * refact immutable widget
 
-# 0.3.3
+## 0.3.3
 
 * Format files with flutter format 
 
-# 0.4.3
+## 0.4.3
 
 * Add Dart Doc 
 
-# 0.4.4
+## 0.4.4
 
 * Fix Dart Doc
+
+## 0.4.5
+
+* Fix Change log
