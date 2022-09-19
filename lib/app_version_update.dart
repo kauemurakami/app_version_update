@@ -12,9 +12,9 @@ import 'core/values/consts/consts.dart';
 
 class AppVersionUpdate {
   /// Checks for app update in stores, taking into account the local version.
-  /// * __[appleId]__ unique identifier in Apple Store, if null, we will use your package name.
-  /// * __[playStoreId]__ unique identifier in Play Store, if null, we will use your package name.
-  /// * __[country]__, region of store, if null, we will use 'us'.
+  /// * ```appleId``` unique identifier in Apple Store, if null, we will use your package name.
+  /// * ```playStoreId``` unique identifier in Play Store, if null, we will use your package name.
+  /// * ```country```, region of store, if null, we will use 'us'.
   /// ## example
   /// ```dart
   /// await AppVersionUpdate.checkForUpdates(
@@ -81,20 +81,20 @@ class AppVersionUpdate {
   }
 
   /// Displays an alert dialog for the user to decide whether to enter update now or update later.
-  /// * __[appVersionResult]__ result of [AppVersionUpdate.checkForUpdate()].
-  /// * __[context]__ build context.
-  /// * __[backgroundColor]__ background color dialog.
-  /// * __[title]__ text title.
-  /// * __[content]__ text content.
-  /// * __[updateButtonText]__ update button text.
-  /// * __[cancelButtonText]__ cancel button text.
-  /// * __[titleTextStyle]__ text style for title.
-  /// * __[contentTextStyle]__ text style for body content.
-  /// * __[updateTextStyle]__ text style for text update button.
-  /// * __[cancelTextStyle]__ text style for text cancel button.
-  /// * __[updateButtonStyle]__ style of update button.
-  /// * __[cancelButtonStyle]__ style of cancel button.
-  /// * __[modalType]__ not yet available, but it will serve as a decision for the type of widget provided by us for display.
+  /// * ```appVersionResult``` result of [AppVersionUpdate.checkForUpdate()].
+  /// * ```context``` build context.
+  /// * ```backgroundColor``` background color dialog.
+  /// * ```title``` text title.
+  /// * ```content``` text content.
+  /// * ```updateButtonText``` update button text.
+  /// * ```cancelButtonText``` cancel button text.
+  /// * ```titleTextStyle``` text style for title.
+  /// * ```contentTextStyle``` text style for body content.
+  /// * ```updateTextStyle``` text style for text update button.
+  /// * ```cancelTextStyle``` text style for text cancel button.
+  /// * ```updateButtonStyle``` style of update button.
+  /// * ```cancelButtonStyle``` style of cancel button.
+  /// * ```modalType``` not yet available, but it will serve as a decision for the type of widget provided by us for display.
   /// ## example
   /// ```dart
   /// await AppVersionUpdate.showAlertUpdate(

@@ -2,7 +2,7 @@ import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-/// [AppVersionUpdate.showAlert()] AlertDialog widget 
+/// ```AppVersionUpdate.showAlert()``` AlertDialog widget
 // ignore: must_be_immutable
 class UpdateVersionDialog extends Container {
   String? title;
