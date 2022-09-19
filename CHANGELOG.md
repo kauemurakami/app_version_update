@@ -31,3 +31,8 @@
 # 0.3.3
 
 * Format files with flutter format 
+
+# 0.4.3
+
+* Add Dart Doc 
+
