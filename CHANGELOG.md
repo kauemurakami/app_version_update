@@ -36,3 +36,6 @@
 
 * Add Dart Doc 
 
+# 0.4.4
+
+* Fix Dart Doc
