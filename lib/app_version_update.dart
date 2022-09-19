@@ -2,6 +2,7 @@ library app_version_update;
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:app_version_update/core/functions/convert_version.dart';
 import 'package:app_version_update/data/enums/app_version_widgets.dart';
 import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:app_version_update/widgets/alert_dialog_update.dart';
@@ -41,12 +42,11 @@ class AppVersionUpdate {
       final response =
           await http.get(uri, headers: headers).catchError((e) => throw e);
       AppVersionResult appVersionResult = AppVersionResult(
-          canUpdate: RegExp(r',\[\[\["([0-9,\.]*)"]],')
-                      .firstMatch(response.body)!
-                      .group(1) ==
-                  packageInfo.version
-              ? false
-              : true,
+          canUpdate: convertVersion(
+              version: packageInfo.version,
+              versionStore: RegExp(r',\[\[\["([0-9,\.]*)"]],')
+                  .firstMatch(response.body)!
+                  .group(1)!),
           storeUrl: uri.toString(),
           storeVersion: RegExp(r',\[\[\["([0-9,\.]*)"]],')
               .firstMatch(response.body)!
@@ -67,9 +67,7 @@ class AppVersionUpdate {
       final _json = json.decode(response.body);
       final List results = _json['results'];
       final appVersionResult = AppVersionResult(
-          canUpdate: _json['results'].first['version'] == packageInfo.version
-              ? false
-              : true,
+          canUpdate: convertVersion(version: packageInfo.version, versionStore: _json['results'].first['version']),
           storeUrl: _json['results'].first['trackViewUrl'],
           storeVersion: _json['results'].first['version'],
           platform: TargetPlatform.iOS);

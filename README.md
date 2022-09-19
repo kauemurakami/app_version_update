@@ -76,6 +76,7 @@ AppUpdateVersion.showAlertUpdate({
 | Next Updates                 | status      |
 |------------------------------|-------------|
 | Mandatory or optional update | development |
+| Create TestMode              | development |
 | Bottom sheet widget          | development |
 | Page widget                  | development |
 | Handle Exceptions            | development |

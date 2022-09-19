@@ -43,3 +43,11 @@
 ## 0.4.5
 
 * Fix Change log
+
+## 1.0.0
+* Stable version !!!
+* Fixing bug that detected an update when the version is the same.
+* Converting string comparison values ​​to num.
+* Added support for versions that have the + character.
+* Componentizing functions.
+* Fixing bug during development with version higher than store version in local app.
