@@ -71,12 +71,15 @@ AppUpdateVersion.showAlertUpdate({
 
 ## Additional information
 
+| Next Updates                 | status      |
+|------------------------------|-------------|
+| Mandatory or optional update | development |
+| Bottom sheet widget          | development |
+| Page widget                  | development |
+| Handle Exceptions            | development |
+| New options custom widgets   | development |
+| Automatic country detection  | development |
+
 This project is at an initial level, more functions will be included as
-
-Automatic country detection, taking into account the phone's language
-
-Responsibility to create and open Bottom Sheets and/or Alert Dialogs to display the result
-
-Better error handling, for now you can check if any value is null.
 
 So any suggestion and contribution is welcome.

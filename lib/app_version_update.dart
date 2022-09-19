@@ -11,6 +11,21 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'core/values/consts/consts.dart';
 
 class AppVersionUpdate {
+  /// Checks for app update in stores, taking into account the local version.
+  /// * __[appleId]__ unique identifier in Apple Store, if null, we will use your package name.
+  /// * __[playStoreId]__ unique identifier in Play Store, if null, we will use your package name.
+  /// * __[country]__, region of store, if null, we will use 'us'.
+  /// ## example
+  /// ```dart
+  /// await AppVersionUpdate.checkForUpdates(
+  ///   appleId: '123456789',
+  ///   playStoreId: 'com.example.app',
+  ///   country: 'br')
+  /// .then((data) async {
+  ///    if (data.canUpdate!) {
+  ///       //action...
+  ///     });
+  /// ```
   static Future<AppVersionResult> checkForUpdates({
     String? appleId,
     String? playStoreId,
@@ -65,6 +80,36 @@ class AppVersionUpdate {
     }
   }
 
+  /// Displays an alert dialog for the user to decide whether to enter update now or update later.
+  /// * __[appVersionResult]__ result of [AppVersionUpdate.checkForUpdate()].
+  /// * __[context]__ build context.
+  /// * __[backgroundColor]__ background color dialog.
+  /// * __[title]__ text title.
+  /// * __[content]__ text content.
+  /// * __[updateButtonText]__ update button text.
+  /// * __[cancelButtonText]__ cancel button text.
+  /// * __[titleTextStyle]__ text style for title.
+  /// * __[contentTextStyle]__ text style for body content.
+  /// * __[updateTextStyle]__ text style for text update button.
+  /// * __[cancelTextStyle]__ text style for text cancel button.
+  /// * __[updateButtonStyle]__ style of update button.
+  /// * __[cancelButtonStyle]__ style of cancel button.
+  /// * __[modalType]__ not yet available, but it will serve as a decision for the type of widget provided by us for display.
+  /// ## example
+  /// ```dart
+  /// await AppVersionUpdate.showAlertUpdate(
+  ///        appVersionResult: data,
+  ///        context: context,
+  ///        backgroundColor: Colors.red,
+  ///        title: 'Title.',
+  ///        content:
+  ///            'Body content',
+  ///        updateButtonText: 'UPDATE',
+  ///        cancelButtonText: 'UPDATE LATER',
+  ///        titleTextStyle: TextStyle(color: Colors.black, fontSize: 16.0),
+  ///        contentTextStyle: TextStyle(color: Colors.black),
+  ///      );
+  /// ```
   static showAlertUpdate({
     @required AppVersionResult? appVersionResult,
     @required BuildContext? context,
