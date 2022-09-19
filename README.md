@@ -1,6 +1,7 @@
+[![Star on GitHub](https://img.shields.io/github/stars/kauemurakami/app_version_update.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/kauemurakami/app_version_update)  
+
 Retrieve version and url for local app update against store app
 Android and iOS  
-[![Star on GitHub](https://img.shields.io/github/stars/kauemurakami/app_version_update.svg?style=flat&logo=github&colorB=deeppink&label=stars)](https://github.com/kauemurakami/app_version_update) 
 
 ## Features
  Using as reference packages like [in_app_update](https://pub.dev/packages/in_app_update) , [version_check](https://pub.dev/packages/version_check).
