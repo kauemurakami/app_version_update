@@ -51,3 +51,6 @@
 * Added support for versions that have the + character.
 * Componentizing functions.
 * Fixing bug during development with version higher than store version in local app.
+
+## 1.0.1
+* Fixing Avoid using unnecessary statements..

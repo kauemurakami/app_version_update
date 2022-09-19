@@ -7,7 +7,7 @@ class UpdateVersionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
-      children: [Text('')],
+      children: const [Text('')],
     ));
   }
 }

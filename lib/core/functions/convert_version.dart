@@ -11,7 +11,7 @@ convertVersion({String? version, String? versionStore}) {
 
   versionStore!.contains('+')
       ? storeVersion = [versionStore.split('+').last]
-      : null;
+      : ;
 
   storeVersion.addAll([
     versionStore.split('.')[0],

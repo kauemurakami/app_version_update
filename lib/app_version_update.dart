@@ -64,12 +64,14 @@ class AppVersionUpdate {
       if (response.statusCode != 200) {
         return throw " Aplication not found in Apple Store, verify your app id. ";
       }
-      final _json = json.decode(response.body);
-      final List results = _json['results'];
+      final jsonResult = json.decode(response.body);
+      final List results = jsonResult['results'];
       final appVersionResult = AppVersionResult(
-          canUpdate: convertVersion(version: packageInfo.version, versionStore: _json['results'].first['version']),
-          storeUrl: _json['results'].first['trackViewUrl'],
-          storeVersion: _json['results'].first['version'],
+          canUpdate: convertVersion(
+              version: packageInfo.version,
+              versionStore: jsonResult['results'].first['version']),
+          storeUrl: jsonResult['results'].first['trackViewUrl'],
+          storeVersion: jsonResult['results'].first['version'],
           platform: TargetPlatform.iOS);
       if (results.isEmpty) {
         throw " Aplication not found in Apple Store, verify your app id. ";
