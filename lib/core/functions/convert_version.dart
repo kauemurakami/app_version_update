@@ -27,7 +27,7 @@ convertVersion({String? version, String? versionStore}) {
   ]);
 
   /// Loop for verify values.
-  for (int i = 0; i <= localVersion.length; i++) {
+  for (int i = 0; i < localVersion.length; i++) {
     /// if any of the store elements is smaller than a corresponding element of local version we will exit the function with false.
     if (int.parse(storeVersion[i]) < int.parse(localVersion[i])) {
       return false;
