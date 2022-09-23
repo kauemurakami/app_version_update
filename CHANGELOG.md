@@ -58,3 +58,6 @@
 ## 1.0.2
 * Fixing Avoid using unnecessary statements..
 * Fixing pubdev docs
+
+## 1.0.3
+* Fixing loop index of Albertbol 
