@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 class UpdateVersionDialog extends Container {
   String? title;
   String? content;
+  bool? mandatory;
   String? updateButtonText;
   String? cancelButtonText;
   ButtonStyle? updateButtonStyle;
@@ -21,6 +22,7 @@ class UpdateVersionDialog extends Container {
   UpdateVersionDialog(
       {this.title,
       this.content,
+      this.mandatory,
       this.updateButtonText,
       this.cancelButtonText,
       this.updateButtonStyle,
@@ -38,45 +40,34 @@ class UpdateVersionDialog extends Container {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(
-        title!,
-        style: titleTextStyle,
-      ),
-      contentPadding: const EdgeInsets.only(top: 16.0),
-      content: FractionallySizedBox(
-        widthFactor: .8,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Flexible(
-                child: Text(
-              content!,
-              maxLines: 4,
-              style: contentTextStyle,
-            )),
-          ],
+        backgroundColor: backgroundColor!,
+        title: Text(
+          title!,
+          style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w700),
         ),
-      ),
-      backgroundColor: backgroundColor,
-      titleTextStyle: titleTextStyle,
-      contentTextStyle: contentTextStyle,
-      actions: [
-        TextButton(
-            style: cancelButtonStyle,
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              cancelButtonText!,
-              style: cancelTextStyle,
-            )),
-        TextButton(
-            style: updateButtonStyle,
-            onPressed: () => launchUrl(Uri.parse(appVersionResult!.storeUrl!),
-                mode: LaunchMode.externalApplication),
-            child: Text(
-              updateButtonText!,
-              style: updateTextStyle,
-            ))
-      ],
-    );
+        content: Text(
+          content!,
+          style: const TextStyle(
+              color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.w400),
+        ),
+        actions: [
+          mandatory!
+              ? const SizedBox.shrink()
+              : TextButton(
+                  style: cancelButtonStyle,
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    cancelButtonText!,
+                    style: cancelTextStyle,
+                  )),
+          TextButton(
+              style: updateButtonStyle,
+              onPressed: () => launchUrl(Uri.parse(appVersionResult!.storeUrl!),
+                  mode: LaunchMode.externalApplication),
+              child: Text(
+                updateButtonText!,
+                style: updateTextStyle,
+              ))
+        ]);
   }
 }

@@ -53,35 +53,40 @@ Customize the Alert Dialog
 AppUpdateVersion.showAlertUpdate({
     @required AppVersionResult? appVersionResult,
     @required BuildContext? context,
-    String? title, = 'New version available',
-    String? content = 'Would you like to update your application?',
+    String? title = 'New version available',
+    String? content = ''Would you like to update your application?'',
     String? cancelButtonText = 'Update later',
     String? updateButtonText = 'Update',
-    ShowModalType? modalType = ShowModalType.alert_dialog,
+    ShowModalType? modalType = ShowModalType.alert_dialog, //anothers: page and bottom_sheet
     Color? backgroundColor = Colors.white,
     TextStyle? cancelTextStyle = const TextStyle(color: Colors.red),
     TextStyle? updateTextStyle = const TextStyle(color: Colors.green),
-    TextStyle? titleTextStyle =
-        const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),
-    TextStyle? contentTextStyle,
-    ButtonStyle? cancelButtonStyle,
-    ButtonStyle? updateButtonStyle,
+    TextStyle? titleTextStyle = const TextStyle(
+        fontSize: 20.0, fontWeight: FontWeight.w700, color: Colors.black),
+    ButtonStyle? cancelButtonStyle = const ButtonStyle(
+        overlayColor: MaterialStatePropertyAll(Colors.black12)),
+    ButtonStyle? updateButtonStyle = const ButtonStyle(
+      overlayColor: MaterialStatePropertyAll(Colors.black12),
+    ),
   })
+  // ShowModalType.page 
+
   // ShowModalType.bottom_sheet (available soon )
-  // ShowModalType.page (available soon )
+ 
 ```
 
 ## Additional information
 
 | Next Updates                 | status      |
 |------------------------------|-------------|
-| Mandatory or optional update | development |
+| Mandatory or optional update | released    |
 | Create TestMode              | development |
-| Bottom sheet widget          | development |
-| Page widget                  | development |
+| Bottom sheet widget          | released    |
+| Page widget                  | released    |
 | Handle Exceptions            | development |
-| New options custom widgets   | development |
-| Automatic country detection  | development |
+| New options custom widgets   | released    |
+| Automatic country detection  | released    |
+| Modularize files             | listed      |
 
 This project is at an initial level, more functions will be included as
 

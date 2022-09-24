@@ -61,3 +61,9 @@
 
 ## 1.0.3
 * Fixing loop index of Albertbol 
+
+## 2.0.0
+* Added mandatory update
+* Added new popups (ShowModalType) Page and BottomSheet
+* Adding more customization options for the content dialog and bottomSheet
+* Added more docs

@@ -3,9 +3,10 @@ library app_version_update;
 import 'dart:convert';
 import 'dart:io';
 import 'package:app_version_update/core/functions/convert_version.dart';
-import 'package:app_version_update/data/enums/app_version_widgets.dart';
 import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:app_version_update/widgets/alert_dialog_update.dart';
+import 'package:app_version_update/widgets/bottom_sheet_update.dart';
+import 'package:app_version_update/widgets/update_page.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
@@ -33,7 +34,6 @@ class AppVersionUpdate {
     String? country = 'us',
   }) async {
     final packageInfo = await PackageInfo.fromPlatform();
-
     if (Platform.isAndroid) {
       playStoreId = playStoreId ?? packageInfo.packageName;
       final parameters = {id: playStoreId, "hl": country};
@@ -94,65 +94,128 @@ class AppVersionUpdate {
   /// * ```cancelTextStyle``` text style for text cancel button.
   /// * ```updateButtonStyle``` style of update button.
   /// * ```cancelButtonStyle``` style of cancel button.
-  /// * ```modalType``` not yet available, but it will serve as a decision for the type of widget provided by us for display.
+  /// * ```mandatory ``` for mandatories update default false
   /// ## example
   /// ```dart
   /// await AppVersionUpdate.showAlertUpdate(
-  ///        appVersionResult: data,
-  ///        context: context,
-  ///        backgroundColor: Colors.red,
-  ///        title: 'Title.',
-  ///        content:
-  ///            'Body content',
-  ///        updateButtonText: 'UPDATE',
-  ///        cancelButtonText: 'UPDATE LATER',
-  ///        titleTextStyle: TextStyle(color: Colors.black, fontSize: 16.0),
-  ///        contentTextStyle: TextStyle(color: Colors.black),
+  ///       BuildContext? context,
+  ///       AppVersionResult? appVersionResult,
+  ///       bool? mandatory = false,
+  ///       String? title = 'New version available',
+  ///       TextStyle titleTextStyle =
+  ///          const TextStyle(fontSize: 24.0, fontWeight: FontWeight.w500),
+  ///       String? content = 'Would you like to update your application?',
+  ///       TextStyle contentTextStyle =
+  ///           const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
+  ///       ButtonStyle? cancelButtonStyle = const ButtonStyle(
+  ///           backgroundColor: MaterialStatePropertyAll(Colors.redAccent)),
+  ///       ButtonStyle? updateButtonStyle = const ButtonStyle(
+  ///           backgroundColor: MaterialStatePropertyAll(Colors.green)),
+  ///       String? cancelButtonText = 'UPDATE LATER',
+  ///       String? updateButtonText = 'UPDATE',
+  ///       TextStyle? cancelTextStyle = const TextStyle(color: Colors.white),
+  ///       TextStyle? updateTextStyle = const TextStyle(color: Colors.white),
+  ///       Color? backgroundColor = Colors.white
   ///      );
   /// ```
-  static showAlertUpdate({
-    @required AppVersionResult? appVersionResult,
-    @required BuildContext? context,
-    String? title = 'New version available',
-    String? content = 'Would you like to update your application?',
-    String? cancelButtonText = 'Update later',
-    String? updateButtonText = 'Update',
-    ShowModalType? modalType = ShowModalType.alert_dialog,
-    Color? backgroundColor = Colors.white,
-    TextStyle? cancelTextStyle = const TextStyle(color: Colors.red),
-    TextStyle? updateTextStyle = const TextStyle(color: Colors.green),
-    TextStyle? titleTextStyle =
-        const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w700),
-    TextStyle? contentTextStyle,
-    ButtonStyle? cancelButtonStyle,
-    ButtonStyle? updateButtonStyle,
-  }) async {
-    if (modalType == ShowModalType.alert_dialog) {
-      await showDialog(
-          context: context!,
-          builder: (context) => UpdateVersionDialog(
-                appVersionResult: appVersionResult,
-                title: title,
-                titleTextStyle: titleTextStyle,
-                content: content,
-                cancelTextStyle: cancelTextStyle,
-                updateTextStyle: updateTextStyle,
-                contentTextStyle: contentTextStyle,
-                backgroundColor: backgroundColor,
-                cancelButtonText: cancelButtonText,
-                cancelButtonStyle: cancelButtonStyle,
-                updateButtonText: updateButtonText,
-                updateButtonStyle: updateButtonStyle,
-              ));
-    } else if (modalType == ShowModalType.page) {
-      throw "available soon";
-      // Navigator.push(context!,
-      //     MaterialPageRoute(builder: (context) => const UpdateVersionPage()));
-    } else if (modalType == ShowModalType.bottom_sheet) {
-      throw "available soon";
-    }
+  static showAlertUpdate(
+      {BuildContext? context,
+      AppVersionResult? appVersionResult,
+      bool? mandatory = false,
+      String? title = 'New version available',
+      TextStyle titleTextStyle =
+          const TextStyle(fontSize: 24.0, fontWeight: FontWeight.w500),
+      String? content = 'Would you like to update your application?',
+      TextStyle contentTextStyle =
+          const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
+      ButtonStyle? cancelButtonStyle = const ButtonStyle(
+          backgroundColor: MaterialStatePropertyAll(Colors.redAccent)),
+      ButtonStyle? updateButtonStyle = const ButtonStyle(
+          backgroundColor: MaterialStatePropertyAll(Colors.green)),
+      String? cancelButtonText = 'UPDATE LATER',
+      String? updateButtonText = 'UPDATE',
+      TextStyle? cancelTextStyle = const TextStyle(color: Colors.white),
+      TextStyle? updateTextStyle = const TextStyle(color: Colors.white),
+      Color? backgroundColor = Colors.white}) async {
+    await showDialog(
+        barrierDismissible: !mandatory!,
+        context: context!,
+        builder: (context) => UpdateVersionDialog(
+              appVersionResult: appVersionResult,
+              backgroundColor: backgroundColor,
+              cancelButtonStyle: cancelButtonStyle,
+              cancelButtonText: cancelButtonText,
+              cancelTextStyle: cancelTextStyle,
+              content: content,
+              contentTextStyle: contentTextStyle,
+              title: title,
+              titleTextStyle: titleTextStyle,
+              mandatory: mandatory,
+              updateButtonStyle: updateButtonStyle,
+              updateButtonText: updateButtonText,
+              updateTextStyle: updateTextStyle,
+            ));
   }
 
-  static showBottomSheetUpdate() async {}
-  static showPageUpdate() async {}
+  /// Used for This widget comstujma be used for updates that have terms to accept or explanations
+  /// Navigate to another page, just pass your widget that will open as a page
+  /// * ```appVersionResult``` result of [AppVersionUpdate.checkForUpdate()].
+  /// * ```context``` build context.
+  /// * ```page``` your custom page for displays update or default page in use
+  /// * ```mandatory ``` for mandatories update default false
+  /// ## example
+  /// ```dart
+  /// await AppVersionUpdate.showPageUpdate(
+  ///        appVersionResult: data,
+  ///        context: context,
+  ///        page: MyCustomPAge()
+  ///      );
+  /// ```
+  static showPageUpdate(
+      {@required BuildContext? context,
+      @required AppVersionResult? appVersionResult,
+      bool? mandatory = false,
+      Widget? page}) async {
+    Navigator.push(
+        context!,
+        MaterialPageRoute(
+            builder: (context) =>
+                page ??
+                UpdateVersionPage(
+                  mandatory: mandatory,
+                  appVersionResult: appVersionResult,
+                )));
+  }
+
+  /// Opens a bottomsheet, with title, content and update options
+  /// * ```appVersionResult``` result of [AppVersionUpdate.checkForUpdate()].
+  /// * ```context``` build context.
+  /// * ```page``` your custom page for displays update or default page in use
+  /// * ```title``` text title
+  /// * ```mandatory ``` for mandatories update default false
+  /// ## example
+  /// ```dart
+  /// await AppVersionUpdate.showBottomSheetUpdate(
+  ///        appVersionResult: data,
+  ///        context: context,
+  ///        content: WidgetWithContent() or use default,
+  ///        title: text title bottomSheet or default
+  ///      );
+  /// ```
+  static showBottomSheetUpdate(
+      {@required BuildContext? context,
+      @required AppVersionResult? appVersionResult,
+      bool? mandatory = false,
+      String? title = 'New version avaible',
+      Widget? content}) async {
+    await showModalBottomSheet(
+        isDismissible: !mandatory!,
+        context: context!,
+        builder: (context) => BottomSheetUpdateVersion(
+              appVersionResult: appVersionResult,
+              mandatory: mandatory,
+              content: content,
+              title: title,
+            ));
+  }
 }
