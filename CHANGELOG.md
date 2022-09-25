@@ -67,3 +67,6 @@
 * Added new popups (ShowModalType) Page and BottomSheet
 * Adding more customization options for the content dialog and bottomSheet
 * Added more docs
+
+## 2.0.1
+* Added docs new widgets

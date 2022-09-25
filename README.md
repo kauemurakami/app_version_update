@@ -39,6 +39,9 @@ await AppVersionUpdate.checkForUpdates(
             if(data.canUpdate!){
               //showDialog(... your custom widgets view) 
               //or use our widgets
+              // AppVersionUpdate.showAlertUpdate
+              // AppVersionUpdate.showBottomSheetUpdate
+              // AppVersionUpdate.showPageUpdate
               AppVersionUpdate.showAlertUpdate(
               appVersionResult: data, context: context);
             }
@@ -49,12 +52,11 @@ Customize the Alert Dialog
 
 ```dart
 // you also have some options to customize our Alert Dialog 
-// ShowModalType.alert_dialog
 AppUpdateVersion.showAlertUpdate({
     @required AppVersionResult? appVersionResult,
     @required BuildContext? context,
     String? title = 'New version available',
-    String? content = ''Would you like to update your application?'',
+    String? content = 'Would you like to update your application?',
     String? cancelButtonText = 'Update later',
     String? updateButtonText = 'Update',
     ShowModalType? modalType = ShowModalType.alert_dialog, //anothers: page and bottom_sheet
@@ -69,9 +71,44 @@ AppUpdateVersion.showAlertUpdate({
       overlayColor: MaterialStatePropertyAll(Colors.black12),
     ),
   })
-  // ShowModalType.page 
 
-  // ShowModalType.bottom_sheet (available soon )
+Customize the our bottom sheet
+
+AppUpdateVersion.showBottomSheetUpdate(
+      {@required BuildContext? context,
+      @required AppVersionResult? appVersionResult,
+      bool? mandatory = false,
+      String? title = 'New version avaible',
+      Widget? content}) async {
+    await showModalBottomSheet(
+        isDismissible: !mandatory!,
+        context: context!,
+        builder: (context) => BottomSheetUpdateVersion(
+              appVersionResult: appVersionResult,
+              mandatory: mandatory,
+              content: content,
+              title: title,
+            ));
+  }
+
+Customize the Page
+// you also have some options to customize our Page
+AppUpdateVersion.showPageUpdate(
+    {@required BuildContext? context,
+    @required AppVersionResult? appVersionResult,
+    bool? mandatory = false,
+    Widget? page}) async {
+     Navigator.push(
+        context!,
+        MaterialPageRoute(
+            builder: (context) =>
+                page ??
+                UpdateVersionPage(
+                  mandatory: mandatory,
+                  appVersionResult: appVersionResult,
+                )));
+  }
+  
  
 ```
 
