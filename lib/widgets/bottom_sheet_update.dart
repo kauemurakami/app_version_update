@@ -2,6 +2,8 @@ import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+/// ```AppVersionUpdate.showBottomSheetUpdate()``` AlertDialog widget
+// ignore: must_be_immutable
 class BottomSheetUpdateVersion extends Container {
   final AppVersionResult? appVersionResult;
   final String? title;

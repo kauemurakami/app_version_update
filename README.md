@@ -71,9 +71,10 @@ AppUpdateVersion.showAlertUpdate({
       overlayColor: MaterialStatePropertyAll(Colors.black12),
     ),
   })
-
+```
 Customize the our bottom sheet
 
+```dart
 AppUpdateVersion.showBottomSheetUpdate(
       {@required BuildContext? context,
       @required AppVersionResult? appVersionResult,
@@ -90,8 +91,10 @@ AppUpdateVersion.showBottomSheetUpdate(
               title: title,
             ));
   }
+```
 
 Customize the Page
+```dart
 // you also have some options to customize our Page
 AppUpdateVersion.showPageUpdate(
     {@required BuildContext? context,

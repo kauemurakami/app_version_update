@@ -70,3 +70,6 @@
 
 ## 2.0.1
 * Added docs new widgets
+
+## 2.0.2
+* Update score docs
