@@ -73,3 +73,6 @@
 
 ## 2.0.2
 * Update score docs
+
+## 2.0.3
+* Fix dialog doc

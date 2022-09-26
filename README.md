@@ -52,25 +52,25 @@ Customize the Alert Dialog
 
 ```dart
 // you also have some options to customize our Alert Dialog 
-AppUpdateVersion.showAlertUpdate({
-    @required AppVersionResult? appVersionResult,
-    @required BuildContext? context,
-    String? title = 'New version available',
-    String? content = 'Would you like to update your application?',
-    String? cancelButtonText = 'Update later',
-    String? updateButtonText = 'Update',
-    ShowModalType? modalType = ShowModalType.alert_dialog, //anothers: page and bottom_sheet
-    Color? backgroundColor = Colors.white,
-    TextStyle? cancelTextStyle = const TextStyle(color: Colors.red),
-    TextStyle? updateTextStyle = const TextStyle(color: Colors.green),
-    TextStyle? titleTextStyle = const TextStyle(
-        fontSize: 20.0, fontWeight: FontWeight.w700, color: Colors.black),
-    ButtonStyle? cancelButtonStyle = const ButtonStyle(
-        overlayColor: MaterialStatePropertyAll(Colors.black12)),
-    ButtonStyle? updateButtonStyle = const ButtonStyle(
-      overlayColor: MaterialStatePropertyAll(Colors.black12),
-    ),
-  })
+AppUpdateVersion.showAlertUpdate(
+    {BuildContext? context,
+      AppVersionResult? appVersionResult,
+      bool? mandatory = false,
+      String? title = 'New version available',
+      TextStyle titleTextStyle =
+          const TextStyle(fontSize: 24.0, fontWeight: FontWeight.w500),
+      String? content = 'Would you like to update your application?',
+      TextStyle contentTextStyle =
+          const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
+      ButtonStyle? cancelButtonStyle = const ButtonStyle(
+          backgroundColor: MaterialStatePropertyAll(Colors.redAccent)),
+      ButtonStyle? updateButtonStyle = const ButtonStyle(
+          backgroundColor: MaterialStatePropertyAll(Colors.green)),
+      String? cancelButtonText = 'UPDATE LATER',
+      String? updateButtonText = 'UPDATE',
+      TextStyle? cancelTextStyle = const TextStyle(color: Colors.white),
+      TextStyle? updateTextStyle = const TextStyle(color: Colors.white),
+      Color? backgroundColor = Colors.white})
 ```
 Customize the our bottom sheet
 
