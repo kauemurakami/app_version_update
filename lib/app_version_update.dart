@@ -41,17 +41,20 @@ class AppVersionUpdate {
           Uri.https(playStoreAuthority, playStoreUndecodedPath, parameters);
       final response =
           await http.get(uri, headers: headers).catchError((e) => throw e);
-      AppVersionResult appVersionResult = AppVersionResult(
-          canUpdate: convertVersion(
-              version: packageInfo.version,
-              versionStore: RegExp(r',\[\[\["([0-9,\.]*)"]],')
-                  .firstMatch(response.body)!
-                  .group(1)!),
-          storeUrl: uri.toString(),
-          storeVersion: RegExp(r',\[\[\["([0-9,\.]*)"]],')
-              .firstMatch(response.body)!
-              .group(1),
-          platform: TargetPlatform.android);
+      AppVersionResult? appVersionResult;
+      final versionMatch =
+          RegExp(r',\[\[\["([0-9,\.]*)"]],').firstMatch(response.body);
+      if (versionMatch != null) {
+        appVersionResult = AppVersionResult(
+            canUpdate: convertVersion(
+                version: packageInfo.version,
+                versionStore: versionMatch.group(1)!),
+            storeUrl: uri.toString(),
+            storeVersion: versionMatch.group(1),
+            platform: TargetPlatform.android);
+      } else {
+        throw "Could not find version information in Play Store response.";
+      }
       if (response.statusCode != 200) {
         throw " Aplication not found in Play Store, verify your app id. ";
       }

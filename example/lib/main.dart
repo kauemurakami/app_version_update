@@ -39,11 +39,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _verifyVersion() async {
-    PackageInfo? packageInfo = await PackageInfo.fromPlatform();
     await AppVersionUpdate.checkForUpdates(
-            appleId: '284882215',
-            playStoreId: 'com.facebook.katana',
-            country: 'br')
+            appleId: '1459706595', playStoreId: 'com.byebnk.app', country: 'br')
         .then((data) async {
       print(data);
       if (data.canUpdate!) {
