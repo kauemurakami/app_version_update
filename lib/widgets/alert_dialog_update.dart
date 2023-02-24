@@ -32,8 +32,7 @@ class UpdateVersionDialog extends Container {
       this.cancelButtonStyle,
       this.cancelTextStyle,
       this.contentTextStyle,
-      this.titleTextStyle =
-          const TextStyle(fontSize: 18.0, fontWeight: FontWeight.w700),
+      this.titleTextStyle,
       Key? key})
       : super(key: key);
 
@@ -43,12 +42,19 @@ class UpdateVersionDialog extends Container {
         backgroundColor: backgroundColor!,
         title: Text(
           title!,
-          style: const TextStyle(fontSize: 20.0, fontWeight: FontWeight.w700),
+          style: titleTextStyle ??
+              const TextStyle(
+                  color: Colors.black,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.w700),
         ),
         content: Text(
           content!,
-          style: const TextStyle(
-              color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.w400),
+          style: contentTextStyle ??
+              const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w400),
         ),
         actions: [
           mandatory!

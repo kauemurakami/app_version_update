@@ -123,10 +123,10 @@ class AppVersionUpdate {
       AppVersionResult? appVersionResult,
       bool? mandatory = false,
       String? title = 'New version available',
-      TextStyle titleTextStyle =
+      TextStyle? titleTextStyle =
           const TextStyle(fontSize: 24.0, fontWeight: FontWeight.w500),
       String? content = 'Would you like to update your application?',
-      TextStyle contentTextStyle =
+      TextStyle? contentTextStyle =
           const TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
       ButtonStyle? cancelButtonStyle = const ButtonStyle(
           backgroundColor: MaterialStatePropertyAll(Colors.redAccent)),
