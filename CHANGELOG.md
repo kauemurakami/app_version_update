@@ -76,3 +76,9 @@
 
 ## 2.0.3
 * Fix dialog doc
+
+## 3.0.0
+* Add minimal example
+* Add internet permission in readme
+* Fix 2 digits or higher versions by [@pom11](https://github.com/pom11)
+* Fix a bug where custom text styles are not applied by [@msitbon](https://github.com/msitbon)

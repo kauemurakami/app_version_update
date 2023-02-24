@@ -27,6 +27,17 @@ To test, you can manually downgrade your pubspec.yaml from your ```version:``` ,
 
 ## Usage
 
+Internet permission Android:
+`<uses-permission android:name="android.permission.INTERNET" />`
+
+Internet permission iOs:
+`
+<key>NSAppTransportSecurity</key>
+<dict>
+  <key>NSAllowsArbitraryLoads</key><true/>
+</dict>
+`
+
 ```dart
 final appleId = '1234567890'; // If this value is null, its packagename will be considered
 final playStoreId = 'com.example.app'; // If this value is null, its packagename will be considered
