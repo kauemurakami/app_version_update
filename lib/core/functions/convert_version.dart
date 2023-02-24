@@ -12,7 +12,7 @@ convertVersion({String? version, String? versionStore}) {
 
   /// add all values of array in localversion array.
   localVersion.addAll(
-      [version.split('.')[0], version.split('.')[1], version.split('.')[2][0]]);
+      [version.split('.')[0], version.split('.')[1], version.split('.')[2]]);
 
   /// verify if exist + char in content version string.
   if (versionStore!.contains('+')) {
@@ -23,7 +23,7 @@ convertVersion({String? version, String? versionStore}) {
   storeVersion.addAll([
     versionStore.split('.')[0],
     versionStore.split('.')[1],
-    versionStore.split('.')[2][0]
+    versionStore.split('.')[2]
   ]);
 
   /// Loop for verify values.
