@@ -9,6 +9,3 @@ const playStoreUndecodedPath = '/store/apps/details';
 
 /// play store url string.
 const appleStoreAuthority = 'itunes.apple.com';
-
-/// id string for reuse
-const id = 'id';

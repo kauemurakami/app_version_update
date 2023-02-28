@@ -8,23 +8,20 @@ convertVersion({String? version, String? versionStore}) {
   /// verify version string contains + char.
   if (version!.contains('+')) {
     localVersion = [version.split('+').last];
+    version = version.split('+').first;
   }
 
   /// add all values of array in localversion array.
-  localVersion.addAll(
-      [version.split('.')[0], version.split('.')[1], version.split('.')[2]]);
+  localVersion.addAll(version.split('.'));
 
   /// verify if exist + char in content version string.
   if (versionStore!.contains('+')) {
     storeVersion = [versionStore.split('+').last];
+    versionStore = versionStore.split('+').first;
   }
 
   /// add all elements of array.
-  storeVersion.addAll([
-    versionStore.split('.')[0],
-    versionStore.split('.')[1],
-    versionStore.split('.')[2]
-  ]);
+  storeVersion.addAll(versionStore.split('.'));
 
   /// Loop for verify values.
   for (int i = 0; i < localVersion.length; i++) {
