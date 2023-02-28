@@ -1,16 +1,13 @@
 library app_version_update;
 
-import 'dart:convert';
 import 'dart:io';
 import 'package:app_version_update/core/functions/convert_version.dart';
+import 'package:app_version_update/core/functions/fetch_version.dart';
 import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:app_version_update/widgets/alert_dialog_update.dart';
 import 'package:app_version_update/widgets/bottom_sheet_update.dart';
 import 'package:app_version_update/widgets/update_page.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:package_info_plus/package_info_plus.dart';
-import 'core/values/consts/consts.dart';
 
 class AppVersionUpdate {
   /// Checks for app update in stores, taking into account the local version.
@@ -33,53 +30,28 @@ class AppVersionUpdate {
     String? playStoreId,
     String? country = 'us',
   }) async {
-    final packageInfo = await PackageInfo.fromPlatform();
-    if (Platform.isAndroid) {
-      playStoreId = playStoreId ?? packageInfo.packageName;
-      final parameters = {id: playStoreId, "hl": country};
-      var uri =
-          Uri.https(playStoreAuthority, playStoreUndecodedPath, parameters);
-      final response =
-          await http.get(uri, headers: headers).catchError((e) => throw e);
-      AppVersionResult? appVersionResult;
-      final versionMatch =
-          RegExp(r',\[\[\["([0-9,\.]*)"]],').firstMatch(response.body);
-      if (versionMatch != null) {
-        appVersionResult = AppVersionResult(
-            canUpdate: convertVersion(
-                version: packageInfo.version,
-                versionStore: versionMatch.group(1)!),
-            storeUrl: uri.toString(),
-            storeVersion: versionMatch.group(1),
-            platform: TargetPlatform.android);
-      } else {
-        throw "Could not find version information in Play Store response.";
-      }
-      if (response.statusCode != 200) {
-        throw " Aplication not found in Play Store, verify your app id. ";
-      }
-      return appVersionResult;
-    } else {
-      appleId = appleId ?? packageInfo.packageName;
-      final parameters = {id: appleId};
-      var uri = Uri.https(appleStoreAuthority, '/$country/lookup', parameters);
-      final response = await http.get(uri, headers: headers);
-      if (response.statusCode != 200) {
-        return throw " Aplication not found in Apple Store, verify your app id. ";
-      }
-      final jsonResult = json.decode(response.body);
-      final List results = jsonResult['results'];
-      final appVersionResult = AppVersionResult(
-          canUpdate: convertVersion(
-              version: packageInfo.version,
-              versionStore: jsonResult['results'].first['version']),
-          storeUrl: jsonResult['results'].first['trackViewUrl'],
-          storeVersion: jsonResult['results'].first['version'],
-          platform: TargetPlatform.iOS);
-      if (results.isEmpty) {
-        throw " Aplication not found in Apple Store, verify your app id. ";
-      }
-      return appVersionResult;
+
+      List<dynamic> results = await fetchVersion(
+        playStoreId: playStoreId,
+        appleId: appleId,
+        country: country
+      );
+
+      String versionLocal = results[0];
+      String versionStore = results[1];
+      String storeUrl = results[2];
+      TargetPlatform targetPlatform = results[3];
+      bool canUpdate = await convertVersion(
+        version: versionLocal,
+        versionStore: versionStore
+      );
+
+      return AppVersionResult(
+          canUpdate: canUpdate,
+          storeUrl: storeUrl,
+          storeVersion: versionStore,
+          platform: targetPlatform);
+
     }
   }
 
