@@ -53,7 +53,7 @@ class AppVersionUpdate {
           platform: targetPlatform);
 
     }
-  }
+
 
   /// Displays an alert dialog for the user to decide whether to enter update now or update later.
   /// * ```appVersionResult``` result of [AppVersionUpdate.checkForUpdate()].
@@ -93,7 +93,7 @@ class AppVersionUpdate {
   ///       Color? backgroundColor = Colors.white
   ///      );
   /// ```
-  static showAlertUpdate(
+   static showAlertUpdate(
       {BuildContext? context,
       AppVersionResult? appVersionResult,
       bool? mandatory = false,
@@ -146,7 +146,7 @@ class AppVersionUpdate {
   ///        page: MyCustomPAge()
   ///      );
   /// ```
-  static showPageUpdate(
+   static showPageUpdate(
       {@required BuildContext? context,
       @required AppVersionResult? appVersionResult,
       bool? mandatory = false,
@@ -177,7 +177,7 @@ class AppVersionUpdate {
   ///        title: text title bottomSheet or default
   ///      );
   /// ```
-  static showBottomSheetUpdate(
+   showBottomSheetUpdate(
       {@required BuildContext? context,
       @required AppVersionResult? appVersionResult,
       bool? mandatory = false,
@@ -193,4 +193,5 @@ class AppVersionUpdate {
               title: title,
             ));
   }
+
 }
