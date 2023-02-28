@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:app_version_update/core/utils/classes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:http/http.dart' as http;
@@ -10,24 +11,24 @@ import '../values/consts/consts.dart';
 /// * ```appleId``` unique identifier in Apple Store, if null, we will use your package name.
 /// * ```playStoreId``` unique identifier in Play Store, if null, we will use your package name.
 /// * ```country```, region of store, if null, we will use 'us'.
-Future<List<dynamic>> fetchVersion({String? playStoreId, String? appleId, String? country}) async {
+Future<AppVersionData> fetchVersion({String? playStoreId, String? appleId, String? country}) async {
   final packageInfo = await PackageInfo.fromPlatform();
   if (Platform.isAndroid){
-    List result = await fetchAndroid(
+    AppVersionData data = await fetchAndroid(
       packageInfo: packageInfo,
       playStoreId: playStoreId,
       country: country
     );
-    result.insert(0, packageInfo.version);
-    return result;
+    data.localVersion = packageInfo.version;
+    return data;
   } else if (Platform.isIOS){
-    List result = await fetchIOS(
+    AppVersionData data = await fetchIOS(
       packageInfo: packageInfo,
       appleId: appleId,
       country: country
     );
-    result.insert(0, packageInfo.version);
-    return result;
+    data.localVersion = packageInfo.version;
+    return data;
   }
     else {
       throw "Unkown platform";
@@ -35,7 +36,7 @@ Future<List<dynamic>> fetchVersion({String? playStoreId, String? appleId, String
 }
 
 
-Future<List<dynamic>> fetchAndroid({PackageInfo? packageInfo, String? playStoreId, String? country}) async {
+Future<AppVersionData> fetchAndroid({PackageInfo? packageInfo, String? playStoreId, String? country}) async {
   playStoreId = playStoreId ?? packageInfo?.packageName;
   final parameters = {"id": playStoreId, "hl": country};
   var uri =
@@ -46,7 +47,11 @@ Future<List<dynamic>> fetchAndroid({PackageInfo? packageInfo, String? playStoreI
     final versionMatch =
     RegExp(r',\[\[\["([0-9,\.]*)"]],').firstMatch(response.body);
     if (versionMatch != null){
-      return [versionMatch.group(1),uri.toString(),TargetPlatform.android];
+      return AppVersionData(
+        storeVersion: versionMatch.group(1),
+        storeUrl: uri.toString(),
+        targetPlatform: TargetPlatform.android
+      );
     } else {
       throw " Aplication not found in Play Store, verify your app id. ";
     }
@@ -55,7 +60,7 @@ Future<List<dynamic>> fetchAndroid({PackageInfo? packageInfo, String? playStoreI
   }
 }
 
-Future<List<dynamic>> fetchIOS({PackageInfo? packageInfo, String? appleId, String? country}) async {
+Future<AppVersionData> fetchIOS({PackageInfo? packageInfo, String? appleId, String? country}) async {
   appleId = appleId ?? packageInfo?.packageName;
   final parameters = {"id": appleId};
   var uri = Uri.https(appleStoreAuthority, '/$country/lookup', parameters);
@@ -66,7 +71,11 @@ Future<List<dynamic>> fetchIOS({PackageInfo? packageInfo, String? appleId, Strin
     if (results.isEmpty) {
       throw " Aplication not found in Apple Store, verify your app id. ";
     } else {
-      return [jsonResult['results'].first['version'],jsonResult['results'].first['trackViewUrl'],TargetPlatform.iOS];
+      return AppVersionData(
+        storeVersion: jsonResult['results'].first['version'],
+        storeUrl: jsonResult['results'].first['trackViewUrl'],
+        targetPlatform: TargetPlatform.iOS
+      );
     }
   }
   else {

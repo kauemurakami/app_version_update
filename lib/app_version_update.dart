@@ -3,6 +3,7 @@ library app_version_update;
 import 'dart:io';
 import 'package:app_version_update/core/functions/convert_version.dart';
 import 'package:app_version_update/core/functions/fetch_version.dart';
+import 'package:app_version_update/core/utils/classes.dart';
 import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:app_version_update/widgets/alert_dialog_update.dart';
 import 'package:app_version_update/widgets/bottom_sheet_update.dart';
@@ -31,26 +32,23 @@ class AppVersionUpdate {
     String? country = 'us',
   }) async {
 
-      List<dynamic> results = await fetchVersion(
+      AppVersionData data = await fetchVersion(
         playStoreId: playStoreId,
         appleId: appleId,
         country: country
       );
 
-      String versionLocal = results[0];
-      String versionStore = results[1];
-      String storeUrl = results[2];
-      TargetPlatform targetPlatform = results[3];
       bool canUpdate = await convertVersion(
-        version: versionLocal,
-        versionStore: versionStore
+        version: data.localVersion,
+        versionStore: data.storeVersion
       );
+      data.canUpdate = canUpdate;
 
       return AppVersionResult(
-          canUpdate: canUpdate,
-          storeUrl: storeUrl,
-          storeVersion: versionStore,
-          platform: targetPlatform);
+          canUpdate: data.canUpdate,
+          storeUrl: data.storeUrl,
+          storeVersion: data.storeVersion,
+          platform: data.targetPlatform);
 
     }
 
