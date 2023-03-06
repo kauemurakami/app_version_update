@@ -7,5 +7,5 @@ class AppVersionData {
   TargetPlatform? targetPlatform;
   bool? canUpdate;
 
-  AppVersionData({this.localVersion,this.storeVersion,this.storeUrl,this.targetPlatform});
+  AppVersionData({this.localVersion,this.storeVersion,this.storeUrl,this.targetPlatform, this.canUpdate=false});
 }
