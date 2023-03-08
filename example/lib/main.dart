@@ -1,6 +1,5 @@
 import 'package:app_version_update/app_version_update.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 void main() {
   runApp(const MyApp());

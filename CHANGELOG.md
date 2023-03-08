@@ -82,3 +82,7 @@
 * Add internet permission in readme
 * Fix 2 digits or higher versions by [@pom11](https://github.com/pom11)
 * Fix a bug where custom text styles are not applied by [@msitbon](https://github.com/msitbon)
+
+## 3.1.0
+* Support fot long versions
+* Improviments in code by  [@pom11](https://github.com/pom11)
