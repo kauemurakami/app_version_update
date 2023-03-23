@@ -167,7 +167,7 @@ class AppVersionUpdate {
   ///        title: text title bottomSheet or default
   ///      );
   /// ```
-   showBottomSheetUpdate(
+   static showBottomSheetUpdate(
       {@required BuildContext? context,
       @required AppVersionResult? appVersionResult,
       bool? mandatory = false,
