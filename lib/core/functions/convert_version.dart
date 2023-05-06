@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import '../extensions/list_extensions.dart';
+
 /// Convert string of the stores for list number and compare.
 /// * ```version``` local version app.
 /// * ```versionStore``` store version app.
@@ -24,14 +28,17 @@ convertVersion({String? version, String? versionStore}) {
   storeVersion.addAll(versionStore.split('.'));
 
   /// Loop for verify values.
-  for (int i = 0; i < localVersion.length; i++) {
+  var maxLength = max(localVersion.length, storeVersion.length);
+  for (int i = 0; i < maxLength; i++) {
     /// if any of the store elements is smaller than a corresponding element of local version we will exit the function with false.
-    if (int.parse(storeVersion[i]) < int.parse(localVersion[i])) {
+    if (int.parse(storeVersion.getOrDefault(i, '0')) <
+        int.parse(localVersion.getOrDefault(i, '0'))) {
       return false;
     }
 
     /// if any element of the store version is greater than the corresponding local version, there is an update.
-    if (int.parse(storeVersion[i]) > int.parse(localVersion[i])) {
+    if (int.parse(storeVersion.getOrDefault(i, '0')) >
+        int.parse(localVersion.getOrDefault(i, '0'))) {
       return true;
     }
   }
