@@ -7,12 +7,12 @@ import 'package:url_launcher/url_launcher.dart';
 class BottomSheetUpdateVersion extends Container {
   final AppVersionResult? appVersionResult;
   final String? title;
-  final bool? mandatory;
+  final bool mandatory;
   final Widget? content;
   BottomSheetUpdateVersion(
       {this.appVersionResult,
       this.content,
-      this.mandatory,
+      this.mandatory = false,
       this.title,
       super.key});
 
@@ -30,22 +30,29 @@ class BottomSheetUpdateVersion extends Container {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title!,
+                  title ?? '',
                   textAlign: TextAlign.start,
                   style: const TextStyle(
-                      fontSize: 24.0, fontWeight: FontWeight.w500),
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 content ?? const SizedBox.shrink(),
-                mandatory! && content == null
+                mandatory && content == null
                     ? const Text(
-                        'There is an update required, please update your app.')
-                    : const Text('Would you like to update your application?'),
+                        'There is an update required, please update your app.',
+                      )
+                    : !mandatory && content == null
+                        ? const Text(
+                            'An update is available would you like to update now ?',
+                          )
+                        : const SizedBox.shrink(),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                mandatory!
+                mandatory
                     ? const SizedBox.shrink()
                     : MaterialButton(
                         minWidth: 140.0,

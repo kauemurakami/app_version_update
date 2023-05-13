@@ -29,21 +29,15 @@ class AppVersionUpdate {
     String? playStoreId,
     String? country = 'us',
   }) async {
+    AppVersionData data = await fetchVersion(
+        playStoreId: playStoreId, appleId: appleId, country: country);
 
-      AppVersionData data = await fetchVersion(
-        playStoreId: playStoreId,
-        appleId: appleId,
-        country: country
-      );
-
-      return AppVersionResult(
-          canUpdate: data.canUpdate,
-          storeUrl: data.storeUrl,
-          storeVersion: data.storeVersion,
-          platform: data.targetPlatform);
-
-    }
-
+    return AppVersionResult(
+        canUpdate: data.canUpdate,
+        storeUrl: data.storeUrl,
+        storeVersion: data.storeVersion,
+        platform: data.targetPlatform);
+  }
 
   /// Displays an alert dialog for the user to decide whether to enter update now or update later.
   /// * ```appVersionResult``` result of [AppVersionUpdate.checkForUpdate()].
@@ -83,7 +77,7 @@ class AppVersionUpdate {
   ///       Color? backgroundColor = Colors.white
   ///      );
   /// ```
-   static showAlertUpdate(
+  static showAlertUpdate(
       {BuildContext? context,
       AppVersionResult? appVersionResult,
       bool? mandatory = false,
@@ -103,23 +97,24 @@ class AppVersionUpdate {
       TextStyle? updateTextStyle = const TextStyle(color: Colors.white),
       Color? backgroundColor = Colors.white}) async {
     await showDialog(
-        barrierDismissible: !mandatory!,
-        context: context!,
-        builder: (context) => UpdateVersionDialog(
-              appVersionResult: appVersionResult,
-              backgroundColor: backgroundColor,
-              cancelButtonStyle: cancelButtonStyle,
-              cancelButtonText: cancelButtonText,
-              cancelTextStyle: cancelTextStyle,
-              content: content,
-              contentTextStyle: contentTextStyle,
-              title: title,
-              titleTextStyle: titleTextStyle,
-              mandatory: mandatory,
-              updateButtonStyle: updateButtonStyle,
-              updateButtonText: updateButtonText,
-              updateTextStyle: updateTextStyle,
-            ));
+      barrierDismissible: !mandatory!,
+      context: context!,
+      builder: (context) => UpdateVersionDialog(
+        appVersionResult: appVersionResult,
+        backgroundColor: backgroundColor,
+        cancelButtonStyle: cancelButtonStyle,
+        cancelButtonText: cancelButtonText,
+        cancelTextStyle: cancelTextStyle,
+        content: content,
+        contentTextStyle: contentTextStyle,
+        title: title,
+        titleTextStyle: titleTextStyle,
+        mandatory: mandatory,
+        updateButtonStyle: updateButtonStyle,
+        updateButtonText: updateButtonText,
+        updateTextStyle: updateTextStyle,
+      ),
+    );
   }
 
   /// Used for This widget comstujma be used for updates that have terms to accept or explanations
@@ -136,10 +131,10 @@ class AppVersionUpdate {
   ///        page: MyCustomPAge()
   ///      );
   /// ```
-   static showPageUpdate(
+  static showPageUpdate(
       {@required BuildContext? context,
       @required AppVersionResult? appVersionResult,
-      bool? mandatory = false,
+      bool mandatory = false,
       Widget? page}) async {
     Navigator.push(
         context!,
@@ -167,14 +162,14 @@ class AppVersionUpdate {
   ///        title: text title bottomSheet or default
   ///      );
   /// ```
-   static showBottomSheetUpdate(
+  static showBottomSheetUpdate(
       {@required BuildContext? context,
       @required AppVersionResult? appVersionResult,
-      bool? mandatory = false,
-      String? title = 'New version avaible',
+      bool mandatory = false,
+      String title = 'New version avaible',
       Widget? content}) async {
     await showModalBottomSheet(
-        isDismissible: !mandatory!,
+        isDismissible: !mandatory,
         context: context!,
         builder: (context) => BottomSheetUpdateVersion(
               appVersionResult: appVersionResult,
@@ -183,5 +178,4 @@ class AppVersionUpdate {
               title: title,
             ));
   }
-
 }
