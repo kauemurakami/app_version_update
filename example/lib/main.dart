@@ -49,22 +49,22 @@ class _MyHomePageState extends State<MyHomePage> {
         // or use your own widget with information received from AppVersionResult
 
         //##############################################################################################
-        // await AppVersionUpdate.showAlertUpdate(
-        //   appVersionResult: result,
-        //   context: context,
-        //   backgroundColor: Colors.grey[200],
-        //   title: 'Uma versão mais recente está disponível.',
-        //   titleTextStyle: const TextStyle(
-        //       color: Colors.black, fontWeight: FontWeight.w600, fontSize: 24.0),
-        //   content:
-        //       'Gostaria de atualizar seu aplicativo para a versão mais recente?',
-        //   contentTextStyle: const TextStyle(
-        //     color: Colors.black,
-        //     fontWeight: FontWeight.w400,
-        //   ),
-        //   updateButtonText: 'ATUALIZAR',
-        //   cancelButtonText: 'DEPOIS',
-        // );
+        await AppVersionUpdate.showAlertUpdate(
+          appVersionResult: result,
+          context: context,
+          backgroundColor: Colors.grey[200],
+          title: 'Uma versão mais recente está disponível.',
+          titleTextStyle: const TextStyle(
+              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 24.0),
+          content:
+              'Gostaria de atualizar seu aplicativo para a versão mais recente?',
+          contentTextStyle: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w400,
+          ),
+          updateButtonText: 'ATUALIZAR',
+          cancelButtonText: 'DEPOIS',
+        );
 
         //## AppVersionUpdate.showBottomSheetUpdate ##
         // await AppVersionUpdate.showBottomSheetUpdate(
