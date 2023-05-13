@@ -6,9 +6,9 @@ import 'package:url_launcher/url_launcher.dart';
 // ignore: must_be_immutable
 class UpdateVersionPage extends StatelessWidget {
   final AppVersionResult? appVersionResult;
-  final bool? mandatory;
+  final bool mandatory;
   const UpdateVersionPage(
-      {@required this.appVersionResult, this.mandatory, super.key});
+      {@required this.appVersionResult, this.mandatory = false, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,33 +18,40 @@ class UpdateVersionPage extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'A new version is available!',
-            style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(
-            height: 16.0,
-          ),
-          const Text(
-            'Would you like to update your application?',
-            style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
+          Column(
+            children: const [
+              Text(
+                'A new version is available!',
+                style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(
+                height: 16.0,
+              ),
+              Text(
+                'Would you like to update your application?',
+                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
+              ),
+            ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Flexible(
-                child: MaterialButton(
-                  minWidth: 140.0,
-                  onPressed: () => mandatory!
-                      ? null
-                      : Navigator.pop(context, (route) => false),
-                  color: Colors.redAccent,
-                  child: const Text(
-                    'Update Later',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
+                child: mandatory
+                    ? const SizedBox.shrink()
+                    : MaterialButton(
+                        minWidth: 140.0,
+                        onPressed: () => mandatory
+                            ? null
+                            : Navigator.pop(context, (route) => false),
+                        color: Colors.redAccent,
+                        child: const Text(
+                          'Update Later',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
               ),
               const SizedBox(
                 width: 32.0,
