@@ -11,11 +11,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'app_version_update_example',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(title: 'app_version_update_example'),
     );
   }
 }
@@ -39,28 +39,46 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _verifyVersion() async {
     await AppVersionUpdate.checkForUpdates(
-            appleId: '1459706595', playStoreId: 'com.byebnk.app', country: 'br')
-        .then((data) async {
-      print(data);
-      if (data.canUpdate!) {
+      appleId: '1459706595',
+      playStoreId: 'com.byebnk.app',
+      country: 'br',
+    ).then((result) async {
+      if (result.canUpdate!) {
         // await AppVersionUpdate.showBottomSheetUpdate(context: context, appVersionResult: appVersionResult)
         // await AppVersionUpdate.showPageUpdate(context: context, appVersionResult: appVersionResult)
-        await AppVersionUpdate.showAlertUpdate(
-          appVersionResult: data,
-          context: context,
-          backgroundColor: Colors.grey[200],
-          title: 'Uma versão mais recente está disponível.',
-          content:
-              'Gostaria de atualizar seu aplicativo para a versão mais recente?',
-          updateButtonText: 'ATUALIZAR',
-          cancelButtonText: 'DEPOIS',
-          titleTextStyle: const TextStyle(
-              color: Colors.black, fontWeight: FontWeight.w600, fontSize: 24.0),
-          contentTextStyle: const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w400,
-          ),
-        );
+        // or use your own widget with information received from AppVersionResult
+
+        //##############################################################################################
+        // await AppVersionUpdate.showAlertUpdate(
+        //   appVersionResult: result,
+        //   context: context,
+        //   backgroundColor: Colors.grey[200],
+        //   title: 'Uma versão mais recente está disponível.',
+        //   titleTextStyle: const TextStyle(
+        //       color: Colors.black, fontWeight: FontWeight.w600, fontSize: 24.0),
+        //   content:
+        //       'Gostaria de atualizar seu aplicativo para a versão mais recente?',
+        //   contentTextStyle: const TextStyle(
+        //     color: Colors.black,
+        //     fontWeight: FontWeight.w400,
+        //   ),
+        //   updateButtonText: 'ATUALIZAR',
+        //   cancelButtonText: 'DEPOIS',
+        // );
+
+        //## AppVersionUpdate.showBottomSheetUpdate ##
+        // await AppVersionUpdate.showBottomSheetUpdate(
+        //   context: context,
+        //   mandatory: true,
+        //   appVersionResult: result,
+        // );
+
+        //## AppVersionUpdate.showPageUpdate ##
+
+        // await AppVersionUpdate.showPageUpdate(
+        //   context: context,
+        //   appVersionResult: result,
+        // );
       }
     });
     // TODO: implement initState
