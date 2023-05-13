@@ -1,11 +1,11 @@
 name: app_version_update
 description: An easy and quick way to check if the local app is updated with the same version in their respective stores (Play Store / Apple Store ).
 # author: Kauê Tomaz Murakami<kauetmurakami@gmail.com>
-version: 4.0.0
+version: 4.0.1
 homepage: https://github.com/kauemurakami/app_version_update
 
 environment:
-  sdk: ">=2.18.0 <4.1.0"
+  sdk: ">=2.17.6 <3.7.12"
   flutter: ">=1.17.0"
 
 dependencies:
