@@ -57,8 +57,9 @@ Future<AppVersionData> fetchAndroid(
 
 Future<AppVersionData> fetchIOS(
     {PackageInfo? packageInfo, String? appleId, String? country}) async {
-  appleId = appleId ?? packageInfo?.packageName;
-  final parameters = {"id": appleId};
+  assert(appleId != null || packageInfo != null,
+      'One between appleId or packageInfo must not be null');
+  final parameters = (appleId != null) ? {"id": appleId} : {'bundleId': packageInfo?.packageName};
   var uri = Uri.https(appleStoreAuthority, '/$country/lookup', parameters);
   final response = await http.get(uri, headers: headers);
   if (response.statusCode == 200) {
