@@ -38,42 +38,39 @@ class UpdateVersionDialog extends Container {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-        backgroundColor: backgroundColor!,
-        title: Text(
-          title!,
-          style: titleTextStyle ??
-              const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.w700),
-        ),
-        content: Text(
-          content!,
-          style: contentTextStyle ??
-              const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w400),
-        ),
-        actions: [
-          mandatory!
-              ? const SizedBox.shrink()
-              : TextButton(
-                  style: cancelButtonStyle,
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    cancelButtonText!,
-                    style: cancelTextStyle,
-                  )),
-          TextButton(
-              style: updateButtonStyle,
-              onPressed: () => launchUrl(Uri.parse(appVersionResult!.storeUrl!),
-                  mode: LaunchMode.externalApplication),
-              child: Text(
-                updateButtonText!,
-                style: updateTextStyle,
-              ))
-        ]);
+    return WillPopScope(
+      onWillPop: () async => !(mandatory == true),
+      child: AlertDialog(
+          backgroundColor: backgroundColor!,
+          title: Text(
+            title!,
+            style: titleTextStyle ??
+                const TextStyle(color: Colors.black, fontSize: 20.0, fontWeight: FontWeight.w700),
+          ),
+          content: Text(
+            content!,
+            style: contentTextStyle ??
+                const TextStyle(color: Colors.black, fontSize: 16.0, fontWeight: FontWeight.w400),
+          ),
+          actions: [
+            mandatory!
+                ? const SizedBox.shrink()
+                : TextButton(
+                    style: cancelButtonStyle,
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      cancelButtonText!,
+                      style: cancelTextStyle,
+                    )),
+            TextButton(
+                style: updateButtonStyle,
+                onPressed: () =>
+                    launchUrl(Uri.parse(appVersionResult!.storeUrl!), mode: LaunchMode.externalApplication),
+                child: Text(
+                  updateButtonText!,
+                  style: updateTextStyle,
+                ))
+          ]),
+    );
   }
 }
