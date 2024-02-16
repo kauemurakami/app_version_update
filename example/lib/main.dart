@@ -52,6 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         await AppVersionUpdate.showAlertUpdate(
           appVersionResult: result,
           context: context,
+          mandatory: false,
           backgroundColor: Colors.grey[200],
           title: 'Uma versão mais recente está disponível.',
           titleTextStyle: const TextStyle(
