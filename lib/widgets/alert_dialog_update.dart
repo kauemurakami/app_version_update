@@ -33,8 +33,7 @@ class UpdateVersionDialog extends Container {
       this.cancelTextStyle,
       this.contentTextStyle,
       this.titleTextStyle,
-      Key? key})
-      : super(key: key);
+      super.key});
 
   @override
   Widget build(BuildContext context) {
