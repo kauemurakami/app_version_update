@@ -1,7 +1,7 @@
 name: app_version_update
 description: An easy and quick way to check if the local app is updated with the same version in their respective stores (Play Store / Apple Store ).
 # author: Kauê Tomaz Murakami<kauetmurakami@gmail.com>
-version: 4.0.1
+version: 4.0.2
 homepage: https://github.com/kauemurakami/app_version_update
 
 environment:
@@ -12,17 +12,14 @@ dependencies:
   flutter:
     sdk: flutter
 
-  http: 
-  package_info_plus: ^4.0.0
+  http:
+  package_info_plus: ^6.0.0
   url_launcher:
-  # http: ^0.13.5
-  # package_info_plus: ^1.4.3+1
-  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
- 
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -40,8 +37,7 @@ flutter:
   #       pluginClass: AppVersionUpdate
   #     ios:
   #       pluginClass: AppVersionUpdate
-     
-      
+
   # To add assets to your package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

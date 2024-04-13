@@ -86,3 +86,6 @@
 ## 3.1.0
 * Support fot long versions
 * Improviments in code by  [@pom11](https://github.com/pom11)
+
+## 4.0.2
+* Upgrade dependencies
