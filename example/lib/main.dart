@@ -39,8 +39,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _verifyVersion() async {
     await AppVersionUpdate.checkForUpdates(
-      appleId: '1459706595',
-      playStoreId: 'com.byebnk.app',
+      appleId: '297606951',
+      playStoreId: 'com.amazon.mShop.android.shopping',
       country: 'br',
     ).then((result) async {
       if (result.canUpdate!) {
