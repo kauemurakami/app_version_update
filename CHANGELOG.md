@@ -1,3 +1,13 @@
+## 5.0.0
+* Upgrade `package_info_plus` to `^8.0.0`
+* Set appropriate `sdk` constraints to `>=3.0.0 <4.0.0`
+* Set appropriate `flutter` constraints to `>=3.0.0`
+* Reverse the order of items in changelog for better readability
+* Upgrade linter & fix all issues
+
+Breaking changes:
+* Use lowerCamelCase for enum items in ShowModalType ([recommended rule](https://dart.dev/tools/linter-rules/constant_identifier_names))
+
 ## 4.0.2
 * Upgrade dependencies
 
