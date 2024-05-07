@@ -20,8 +20,8 @@ class UpdateVersionPage extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            children: const [
+          const Column(
+            children: [
               Text(
                 'A new version is available!',
                 style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600),
