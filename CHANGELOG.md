@@ -4,6 +4,8 @@
 * Set appropriate `flutter` constraints to `>=3.0.0`
 * Reverse the order of items in changelog for better readability
 * Upgrade linter & fix all issues
+* Fix example
+* Country cause error in get version Play Store
 
 Breaking changes:
 * Use lowerCamelCase for enum items in ShowModalType ([recommended rule](https://dart.dev/tools/linter-rules/constant_identifier_names))

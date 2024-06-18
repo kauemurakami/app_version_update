@@ -31,19 +31,19 @@ Internet permission Android:
 `<uses-permission android:name="android.permission.INTERNET" />`
 
 Internet permission iOs:
-`
-<key>NSAppTransportSecurity</key>
-<dict>
-  <key>NSAllowsArbitraryLoads</key><true/>
-</dict>
-`
+```dart
+<key>NSAppTransportSecurity</key>  
+<dict>  
+  <key>NSAllowsArbitraryLoads</key><true/>  
+</dict>  
+```
 
 ```dart
-final appleId = '1234567890'; // If this value is null, its packagename will be considered
-final playStoreId = 'com.example.app'; // If this value is null, its packagename will be considered
-final country = 'br' // If this value is null 'us' will be the default value
+final appleId = '284882215'; // If this value is null, its packagename will be considered
+final playStoreId = 'com.facebook.katana'; // If this value is null, its packagename will be considered
+
 await AppVersionUpdate.checkForUpdates(
-            appleId: appleId, playStoreId: playStoreId, country: country)
+            appleId: appleId, playStoreId: playStoreId)
         .then((data) async {
             print(data.storeUrl);
             print(data.storeVersion);
