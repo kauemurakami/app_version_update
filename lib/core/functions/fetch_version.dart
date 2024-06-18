@@ -37,19 +37,45 @@ Future<AppVersionData> fetchAndroid(
   var uri = Uri.https(playStoreAuthority, playStoreUndecodedPath, parameters);
   final response =
       await http.get(uri, headers: headers).catchError((e) => throw e);
+
   if (response.statusCode == 200) {
-    final versionMatch =
-        RegExp(r',\[\[\["([0-9,\.]*)"]],').firstMatch(response.body);
-    if (versionMatch != null) {
-      return AppVersionData(
-          storeVersion: versionMatch.group(1),
+    final String htmlString = response.body;
+
+    // Use regex to find all occurrences of version in the format "]]],"<version-number>"
+    final RegExp regex = RegExp(r'"\]\]\],"(.*?)"');
+    final Iterable<RegExpMatch> matches = regex.allMatches(htmlString);
+
+    // Extract the last version found
+    if (matches.isNotEmpty) {
+      final lastMatch = matches.last;
+      final lastVersion = lastMatch.group(1);
+      print('Última versão encontrada: $lastVersion');
+      if (matches != null) {
+        return AppVersionData(
+          storeVersion: lastVersion,
           storeUrl: uri.toString(),
           localVersion: packageInfo?.version,
           targetPlatform: TargetPlatform.android,
-          );
+        );
+      } else {
+        throw " Aplication not found in Play Store, verify your app id. ";
+      }
     } else {
       throw " Aplication not found in Play Store, verify your app id. ";
     }
+    // final versionMatch =
+    //     RegExp(r',\[\[\["([0-9,\.]*)"]],').firstMatch(response.body);
+
+    // if (versionMatch != null) {
+    //   return AppVersionData(
+    //     storeVersion: versionMatch.group(1),
+    //     storeUrl: uri.toString(),
+    //     localVersion: packageInfo?.version,
+    //     targetPlatform: TargetPlatform.android,
+    //   );
+    // } else {
+    //   throw " Aplication not found in Play Store, verify your app id. ";
+    // }
   } else {
     throw " Aplication not found in Play Store, verify your app id. ";
   }
@@ -59,7 +85,9 @@ Future<AppVersionData> fetchIOS(
     {PackageInfo? packageInfo, String? appleId, String? country}) async {
   assert(appleId != null || packageInfo != null,
       'One between appleId or packageInfo must not be null');
-  var parameters = (appleId != null) ? {"id": appleId} : {'bundleId': packageInfo?.packageName};
+  var parameters = (appleId != null)
+      ? {"id": appleId}
+      : {'bundleId': packageInfo?.packageName};
   if (country != null) {
     parameters['country'] = country;
   }

@@ -27,10 +27,9 @@ class AppVersionUpdate {
   static Future<AppVersionResult> checkForUpdates({
     String? appleId,
     String? playStoreId,
-    String? country = 'us',
   }) async {
-    AppVersionData data = await fetchVersion(
-        playStoreId: playStoreId, appleId: appleId, country: country);
+    AppVersionData data =
+        await fetchVersion(playStoreId: playStoreId, appleId: appleId);
 
     return AppVersionResult(
         canUpdate: data.canUpdate,
