@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:app_version_update/app_version_update.dart';
 import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -7,7 +10,7 @@ import 'package:url_launcher/url_launcher.dart';
 class UpdateVersionDialog extends Container {
   String? title;
   String? content;
-  bool? mandatory;
+  bool mandatory, updated;
   String? updateButtonText;
   String? cancelButtonText;
   ButtonStyle? updateButtonStyle;
@@ -22,7 +25,8 @@ class UpdateVersionDialog extends Container {
   UpdateVersionDialog(
       {this.title,
       this.content,
-      this.mandatory,
+      this.mandatory = false,
+      this.updated = false,
       this.updateButtonText,
       this.cancelButtonText,
       this.updateButtonStyle,
@@ -56,7 +60,7 @@ class UpdateVersionDialog extends Container {
                   fontWeight: FontWeight.w400),
         ),
         actions: [
-          mandatory!
+          mandatory && !updated
               ? const SizedBox.shrink()
               : TextButton(
                   style: cancelButtonStyle,
@@ -67,8 +71,24 @@ class UpdateVersionDialog extends Container {
                   )),
           TextButton(
               style: updateButtonStyle,
-              onPressed: () => launchUrl(Uri.parse(appVersionResult!.storeUrl!),
-                  mode: LaunchMode.externalApplication),
+              onPressed: () async {
+                await launchUrl(
+                  Uri.parse(
+                    appVersionResult!.storeUrl!,
+                  ),
+                  mode: LaunchMode.externalApplication,
+                );
+                if (mandatory && !updated) {
+                  await AppVersionUpdate.checkForUpdates(
+                    appleId: appVersionResult!.appleId,
+                    playStoreId: appVersionResult!.playStoreId,
+                  ).then((checkIfUpdated) {
+                    if (!checkIfUpdated.canUpdate!) {
+                      updated = true;
+                    }
+                  });
+                }
+              },
               child: Text(
                 updateButtonText!,
                 style: updateTextStyle,
