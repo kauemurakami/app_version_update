@@ -13,15 +13,14 @@ import 'convert_version.dart';
 /// * ```playStoreId``` unique identifier in Play Store, if null, we will use your package name.
 /// * ```country```, region of store, if null, we will use 'us'.
 Future<AppVersionData> fetchVersion(
-    {String? playStoreId, String? appleId, String? country}) async {
+    {String? playStoreId, String? appleId}) async {
   final packageInfo = await PackageInfo.fromPlatform();
   AppVersionData data = AppVersionData();
   if (Platform.isAndroid) {
-    data = await fetchAndroid(
-        packageInfo: packageInfo, playStoreId: playStoreId, country: country);
+    data =
+        await fetchAndroid(packageInfo: packageInfo, playStoreId: playStoreId);
   } else if (Platform.isIOS) {
-    data = await fetchIOS(
-        packageInfo: packageInfo, appleId: appleId, country: country);
+    data = await fetchIOS(packageInfo: packageInfo, appleId: appleId);
   } else {
     throw "Unkown platform";
   }
@@ -31,51 +30,46 @@ Future<AppVersionData> fetchVersion(
 }
 
 Future<AppVersionData> fetchAndroid(
-    {PackageInfo? packageInfo, String? playStoreId, String? country}) async {
+    {PackageInfo? packageInfo, String? playStoreId}) async {
   playStoreId = playStoreId ?? packageInfo?.packageName;
-  final parameters = {"id": playStoreId, "hl": country};
+
+  final parameters = {
+    "id": playStoreId,
+  };
   var uri = Uri.https(playStoreAuthority, playStoreUndecodedPath, parameters);
   final response =
       await http.get(uri, headers: headers).catchError((e) => throw e);
 
   if (response.statusCode == 200) {
     final String htmlString = response.body;
-
+    RegExp regex;
+    Iterable<RegExpMatch> matches;
     // Use regex to find all occurrences of version in the format "]]],"<version-number>"
-    final RegExp regex = RegExp(r'"\]\]\],"(.*?)"');
-    final Iterable<RegExpMatch> matches = regex.allMatches(htmlString);
+    if (packageInfo!.version.split('.').length == 3) {
+      regex = RegExp(r'"\]\]\],null,null,null,\[\[\["(.*?)"\]\]\]');
+      matches = regex.allMatches(htmlString);
+    } else {
+      regex = RegExp(r'"\]\]\],"(.*?)"');
+      matches = regex.allMatches(htmlString);
+    }
 
     // Extract the last version found
     if (matches.isNotEmpty) {
       final lastMatch = matches.last;
-      final lastVersion = lastMatch.group(1);
-      print('Última versão encontrada: $lastVersion');
-      if (matches != null) {
-        return AppVersionData(
-          storeVersion: lastVersion,
-          storeUrl: uri.toString(),
-          localVersion: packageInfo?.version,
-          targetPlatform: TargetPlatform.android,
-        );
-      } else {
-        throw " Aplication not found in Play Store, verify your app id. ";
-      }
+      String? lastVersion = lastMatch.group(1);
+      lastVersion = lastVersion!.split('\"').first;
+      print(
+          'Versão local ${packageInfo.version} Última versão encontrada: $lastVersion');
+      return AppVersionData(
+        // canUpdate: packageInfo.version < lastVersion ? true : false,
+        storeVersion: lastVersion,
+        storeUrl: uri.toString(),
+        localVersion: packageInfo.version,
+        targetPlatform: TargetPlatform.android,
+      );
     } else {
-      throw " Aplication not found in Play Store, verify your app id. ";
+      throw "Aplication not found in Play Store, verify your app id. ";
     }
-    // final versionMatch =
-    //     RegExp(r',\[\[\["([0-9,\.]*)"]],').firstMatch(response.body);
-
-    // if (versionMatch != null) {
-    //   return AppVersionData(
-    //     storeVersion: versionMatch.group(1),
-    //     storeUrl: uri.toString(),
-    //     localVersion: packageInfo?.version,
-    //     targetPlatform: TargetPlatform.android,
-    //   );
-    // } else {
-    //   throw " Aplication not found in Play Store, verify your app id. ";
-    // }
   } else {
     throw " Aplication not found in Play Store, verify your app id. ";
   }

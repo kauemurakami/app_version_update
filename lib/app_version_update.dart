@@ -32,6 +32,8 @@ class AppVersionUpdate {
         await fetchVersion(playStoreId: playStoreId, appleId: appleId);
 
     return AppVersionResult(
+        appleId: appleId,
+        playStoreId: playStoreId,
         canUpdate: data.canUpdate,
         storeUrl: data.storeUrl,
         storeVersion: data.storeVersion,

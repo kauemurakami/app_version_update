@@ -7,9 +7,15 @@ import 'package:flutter/cupertino.dart';
 /// * ```platform``` [TargetPlatform] for determine use in android or iOS
 class AppVersionResult {
   AppVersionResult(
-      {this.storeVersion, this.storeUrl, this.platform, this.canUpdate});
-  String? storeVersion, storeUrl;
+      {this.storeVersion,
+      this.storeUrl,
+      this.platform,
+      this.canUpdate,
+      this.appleId,
+      this.playStoreId});
+  String? storeVersion, storeUrl, appleId, playStoreId;
   bool? canUpdate = false;
+
   TargetPlatform? platform;
 
   then(Null Function(dynamic data) param0) {}

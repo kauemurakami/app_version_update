@@ -1,3 +1,10 @@
+## 5.0.2
+* Closing widgets mandatory when back user update app in store
+* Add support to x.xx.x+y
+
+## 5.0.1
+* Fix bug with normal versions
+
 ## 5.0.0
 * Upgrade `package_info_plus` to `^8.0.0`
 * Set appropriate `sdk` constraints to `>=3.0.0 <4.0.0`
