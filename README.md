@@ -31,12 +31,12 @@ Internet permission Android:
 `<uses-permission android:name="android.permission.INTERNET" />`
 
 Internet permission iOs:
-`
-<key>NSAppTransportSecurity</key>
-<dict>
-  <key>NSAllowsArbitraryLoads</key><true/>
-</dict>
-`
+```dart
+<key>NSAppTransportSecurity</key>  
+<dict>  
+  <key>NSAllowsArbitraryLoads</key><true/>  
+</dict>  
+```
 
 ```dart
 final appleId = '284882215'; // If this value is null, its packagename will be considered
