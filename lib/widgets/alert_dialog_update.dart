@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:app_version_update/app_version_update.dart';
 import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:flutter/material.dart';

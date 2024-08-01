@@ -2,27 +2,32 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:app_version_update/data/models/app_version_data.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:package_info_plus/package_info_plus.dart';
+
 import '../values/consts/consts.dart';
 import 'convert_version.dart';
 
 /// Fetch version regarding platform.
 /// * ```appleId``` unique identifier in Apple Store, if null, we will use your package name.
 /// * ```playStoreId``` unique identifier in Play Store, if null, we will use your package name.
-/// * ```country```, region of store, if null, we will use 'us'.
+/// * ```country``` (iOS only) region of store, if null, we will use 'us'.
 Future<AppVersionData> fetchVersion(
-    {String? playStoreId, String? appleId}) async {
+    {String? playStoreId, String? appleId, String? country}) async {
   final packageInfo = await PackageInfo.fromPlatform();
   AppVersionData data = AppVersionData();
   if (Platform.isAndroid) {
     data =
         await fetchAndroid(packageInfo: packageInfo, playStoreId: playStoreId);
   } else if (Platform.isIOS) {
-    data = await fetchIOS(packageInfo: packageInfo, appleId: appleId);
+    data = await fetchIOS(
+      packageInfo: packageInfo,
+      appleId: appleId,
+      country: country,
+    );
   } else {
-    throw "Unkown platform";
+    throw "Unknown platform";
   }
   data.canUpdate = await convertVersion(
       version: data.localVersion, versionStore: data.storeVersion);
@@ -57,9 +62,12 @@ Future<AppVersionData> fetchAndroid(
     if (matches.isNotEmpty) {
       final lastMatch = matches.last;
       String? lastVersion = lastMatch.group(1);
-      lastVersion = lastVersion!.split('\"').first;
-      print(
-          'Versão local ${packageInfo.version} Última versão encontrada: $lastVersion');
+      lastVersion = lastVersion!.split('"').first;
+      if (kDebugMode) {
+        print(
+          'Versão local ${packageInfo.version} Última versão encontrada: $lastVersion',
+        );
+      }
       return AppVersionData(
         // canUpdate: packageInfo.version < lastVersion ? true : false,
         storeVersion: lastVersion,
@@ -68,10 +76,10 @@ Future<AppVersionData> fetchAndroid(
         targetPlatform: TargetPlatform.android,
       );
     } else {
-      throw "Aplication not found in Play Store, verify your app id. ";
+      throw "Application not found in Play Store, verify your app id.";
     }
   } else {
-    throw " Aplication not found in Play Store, verify your app id. ";
+    throw "Application not found in Play Store, verify your app id.";
   }
 }
 
@@ -91,7 +99,7 @@ Future<AppVersionData> fetchIOS(
     final jsonResult = json.decode(response.body);
     final List results = jsonResult['results'];
     if (results.isEmpty) {
-      throw " Aplication not found in Apple Store, verify your app id. ";
+      throw "Application not found in Apple Store, verify your app id.";
     } else {
       return AppVersionData(
           storeVersion: jsonResult['results'].first['version'],
@@ -100,6 +108,6 @@ Future<AppVersionData> fetchIOS(
           targetPlatform: TargetPlatform.iOS);
     }
   } else {
-    return throw " Aplication not found in Apple Store, verify your app id. ";
+    return throw "Application not found in Apple Store, verify your app id.";
   }
 }
