@@ -1,7 +1,6 @@
 library app_version_update;
 
 import 'package:app_version_update/core/functions/fetch_version.dart';
-import 'package:app_version_update/data/models/app_version_data.dart';
 import 'package:app_version_update/data/models/app_version_result.dart';
 import 'package:app_version_update/widgets/alert_dialog_update.dart';
 import 'package:app_version_update/widgets/bottom_sheet_update.dart';
@@ -12,7 +11,7 @@ class AppVersionUpdate {
   /// Checks for app update in stores, taking into account the local version.
   /// * ```appleId``` unique identifier in Apple Store, if null, we will use your package name.
   /// * ```playStoreId``` unique identifier in Play Store, if null, we will use your package name.
-  /// * ```country```, region of store, if null, we will use 'us'.
+  /// * ```country``` (iOS only) region of store, if null, we will use 'us'.
   /// ## example
   /// ```dart
   /// await AppVersionUpdate.checkForUpdates(
@@ -27,10 +26,13 @@ class AppVersionUpdate {
   static Future<AppVersionResult> checkForUpdates({
     String? appleId,
     String? playStoreId,
+    String? country,
   }) async {
-    AppVersionData data =
-        await fetchVersion(playStoreId: playStoreId, appleId: appleId);
-
+    final data = await fetchVersion(
+      playStoreId: playStoreId,
+      appleId: appleId,
+      country: country,
+    );
     return AppVersionResult(
         appleId: appleId,
         playStoreId: playStoreId,
@@ -89,9 +91,9 @@ class AppVersionUpdate {
       TextStyle? contentTextStyle = const TextStyle(
           fontSize: 16.0, fontWeight: FontWeight.w400, color: Colors.black),
       ButtonStyle? cancelButtonStyle = const ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll(Colors.redAccent)),
+          backgroundColor: WidgetStatePropertyAll(Colors.redAccent)),
       ButtonStyle? updateButtonStyle = const ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll(Colors.green)),
+          backgroundColor: WidgetStatePropertyAll(Colors.green)),
       String? cancelButtonText = 'UPDATE LATER',
       String? updateButtonText = 'UPDATE',
       TextStyle? cancelTextStyle = const TextStyle(color: Colors.white),
