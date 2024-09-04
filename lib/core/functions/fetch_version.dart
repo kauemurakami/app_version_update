@@ -93,7 +93,7 @@ Future<AppVersionData> fetchIOS(
   if (country != null) {
     parameters['country'] = country;
   }
-    parameters['version'] = 2;
+  parameters['version'] = '2';
   var uri = Uri.https(appleStoreAuthority, '/lookup', parameters);
   final response = await http.get(uri, headers: headers);
   if (response.statusCode == 200) {
