@@ -1,7 +1,7 @@
 name: app_version_update
 description: An easy and quick way to check if the local app is updated with the same version in their respective stores (Play Store / Apple Store ).
 # author: Kauê Tomaz Murakami<kauetmurakami@gmail.com>
-version: 5.0.1
+version: 5.0.3
 homepage: https://github.com/kauemurakami/app_version_update
 
 environment:
