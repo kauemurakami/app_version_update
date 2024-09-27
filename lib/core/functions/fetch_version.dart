@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:package_info_plus/package_info_plus.dart';
 
 import '../values/consts/consts.dart';
-import 'convert_version.dart';
 
 /// Fetch version regarding platform.
 /// * ```appleId``` unique identifier in Apple Store, if null, we will use your package name.
@@ -29,8 +28,8 @@ Future<AppVersionData> fetchVersion(
   } else {
     throw "Unknown platform";
   }
-  data.canUpdate = await convertVersion(
-      version: data.localVersion, versionStore: data.storeVersion);
+  // data.canUpdate = await convertVersion(
+  //     version: data.localVersion, versionStore: data.storeVersion);
   return data;
 }
 
@@ -93,7 +92,7 @@ Future<AppVersionData> fetchIOS(
   if (country != null) {
     parameters['country'] = country;
   }
-    parameters['version'] = 2;
+  parameters['version'] = "2";
   var uri = Uri.https(appleStoreAuthority, '/lookup', parameters);
   final response = await http.get(uri, headers: headers);
   if (response.statusCode == 200) {
