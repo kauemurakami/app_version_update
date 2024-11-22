@@ -9,12 +9,13 @@ class BottomSheetUpdateVersion extends Container {
   final String? title;
   final bool mandatory;
   final Widget? content;
-  BottomSheetUpdateVersion(
-      {this.appVersionResult,
-      this.content,
-      this.mandatory = false,
-      this.title,
-      super.key});
+  BottomSheetUpdateVersion({
+    this.appVersionResult,
+    this.content,
+    this.mandatory = false,
+    this.title,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
