@@ -80,7 +80,6 @@ class _MyHomePageState extends State<MyHomePage> {
         // );
       }
     });
-    // TODO: implement initState
   }
 
   void _incrementCounter() {
