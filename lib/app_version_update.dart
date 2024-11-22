@@ -91,9 +91,9 @@ class AppVersionUpdate {
     TextStyle? contentTextStyle = const TextStyle(
         fontSize: 16.0, fontWeight: FontWeight.w400, color: Colors.black),
     ButtonStyle? cancelButtonStyle = const ButtonStyle(
-        backgroundColor: MaterialStatePropertyAll(Colors.redAccent)),
+        backgroundColor: WidgetStatePropertyAll(Colors.redAccent)),
     ButtonStyle? updateButtonStyle = const ButtonStyle(
-        backgroundColor: MaterialStatePropertyAll(Colors.green)),
+        backgroundColor: WidgetStatePropertyAll(Colors.green)),
     String? cancelButtonText = 'UPDATE LATER',
     String? updateButtonText = 'UPDATE',
     TextStyle? cancelTextStyle = const TextStyle(color: Colors.white),
