@@ -80,25 +80,26 @@ class AppVersionUpdate {
   ///       Color? backgroundColor = Colors.white
   ///      );
   /// ```
-  static showAlertUpdate(
-      {BuildContext? context,
-      AppVersionResult? appVersionResult,
-      bool? mandatory = false,
-      String? title = 'New version available',
-      TextStyle? titleTextStyle = const TextStyle(
-          fontSize: 24.0, fontWeight: FontWeight.w500, color: Colors.black),
-      String? content = 'Would you like to update your application?',
-      TextStyle? contentTextStyle = const TextStyle(
-          fontSize: 16.0, fontWeight: FontWeight.w400, color: Colors.black),
-      ButtonStyle? cancelButtonStyle = const ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll(Colors.redAccent)),
-      ButtonStyle? updateButtonStyle = const ButtonStyle(
-          backgroundColor: MaterialStatePropertyAll(Colors.green)),
-      String? cancelButtonText = 'UPDATE LATER',
-      String? updateButtonText = 'UPDATE',
-      TextStyle? cancelTextStyle = const TextStyle(color: Colors.white),
-      TextStyle? updateTextStyle = const TextStyle(color: Colors.white),
-      Color? backgroundColor = Colors.white}) async {
+  static showAlertUpdate({
+    BuildContext? context,
+    AppVersionResult? appVersionResult,
+    bool? mandatory = false,
+    String? title = 'New version available',
+    TextStyle? titleTextStyle = const TextStyle(
+        fontSize: 24.0, fontWeight: FontWeight.w500, color: Colors.black),
+    String? content = 'Would you like to update your application?',
+    TextStyle? contentTextStyle = const TextStyle(
+        fontSize: 16.0, fontWeight: FontWeight.w400, color: Colors.black),
+    ButtonStyle? cancelButtonStyle = const ButtonStyle(
+        backgroundColor: WidgetStatePropertyAll(Colors.redAccent)),
+    ButtonStyle? updateButtonStyle = const ButtonStyle(
+        backgroundColor: WidgetStatePropertyAll(Colors.green)),
+    String? cancelButtonText = 'UPDATE LATER',
+    String? updateButtonText = 'UPDATE',
+    TextStyle? cancelTextStyle = const TextStyle(color: Colors.white),
+    TextStyle? updateTextStyle = const TextStyle(color: Colors.white),
+    Color? backgroundColor = Colors.white,
+  }) async {
     await showDialog(
       barrierDismissible: !mandatory!,
       context: context!,
@@ -134,20 +135,23 @@ class AppVersionUpdate {
   ///        page: MyCustomPAge()
   ///      );
   /// ```
-  static showPageUpdate(
-      {@required BuildContext? context,
-      @required AppVersionResult? appVersionResult,
-      bool mandatory = false,
-      Widget? page}) async {
+  static showPageUpdate({
+    @required BuildContext? context,
+    @required AppVersionResult? appVersionResult,
+    bool mandatory = false,
+    Widget? page,
+  }) async {
     Navigator.push(
-        context!,
-        MaterialPageRoute(
-            builder: (context) =>
-                page ??
-                UpdateVersionPage(
-                  mandatory: mandatory,
-                  appVersionResult: appVersionResult,
-                )));
+      context!,
+      MaterialPageRoute(
+        builder: (context) =>
+            page ??
+            UpdateVersionPage(
+              mandatory: mandatory,
+              appVersionResult: appVersionResult,
+            ),
+      ),
+    );
   }
 
   /// Opens a bottomsheet, with title, content and update options
@@ -165,20 +169,22 @@ class AppVersionUpdate {
   ///        title: text title bottomSheet or default
   ///      );
   /// ```
-  static showBottomSheetUpdate(
-      {@required BuildContext? context,
-      @required AppVersionResult? appVersionResult,
-      bool mandatory = false,
-      String title = 'New version avaible',
-      Widget? content}) async {
+  static showBottomSheetUpdate({
+    @required BuildContext? context,
+    @required AppVersionResult? appVersionResult,
+    bool mandatory = false,
+    String title = 'New version avaible',
+    Widget? content,
+  }) async {
     await showModalBottomSheet(
-        isDismissible: !mandatory,
-        context: context!,
-        builder: (context) => BottomSheetUpdateVersion(
-              appVersionResult: appVersionResult,
-              mandatory: mandatory,
-              content: content,
-              title: title,
-            ));
+      isDismissible: !mandatory,
+      context: context!,
+      builder: (context) => BottomSheetUpdateVersion(
+        appVersionResult: appVersionResult,
+        mandatory: mandatory,
+        content: content,
+        title: title,
+      ),
+    );
   }
 }
