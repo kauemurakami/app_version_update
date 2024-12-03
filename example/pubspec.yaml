@@ -1,7 +1,7 @@
 name: example
 description: "A new Flutter project."
 publish_to: 'none'
-version: 36.3.3
+version: 36.3.3 #tiktok test down version
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
