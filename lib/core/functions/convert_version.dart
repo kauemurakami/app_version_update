@@ -31,14 +31,12 @@ convertVersion({String? version, String? versionStore}) {
   var maxLength = max(localVersion.length, storeVersion.length);
   for (int i = 0; i < maxLength; i++) {
     /// if any of the store elements is smaller than a corresponding element of local version we will exit the function with false.
-    if (int.parse(storeVersion.getOrDefault(i, '0')) <
-        int.parse(localVersion.getOrDefault(i, '0'))) {
+    if (int.parse(storeVersion.getOrDefault(i, '0')) < int.parse(localVersion.getOrDefault(i, '0'))) {
       return false;
     }
 
     /// if any element of the store version is greater than the corresponding local version, there is an update.
-    if (int.parse(storeVersion.getOrDefault(i, '0')) >
-        int.parse(localVersion.getOrDefault(i, '0'))) {
+    if (int.parse(storeVersion.getOrDefault(i, '0')) > int.parse(localVersion.getOrDefault(i, '0'))) {
       return true;
     }
   }
