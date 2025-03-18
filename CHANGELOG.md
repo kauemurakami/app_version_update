@@ -1,3 +1,7 @@
+## 6.1.0
+* Fix bug for normal versions with multiple languages
+* Not affect current implementation
+
 ## 5.0.2
 * Closing widgets mandatory when back user update app in store
 * Add support to x.xx.x+y
