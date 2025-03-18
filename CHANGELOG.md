@@ -1,5 +1,7 @@
-## 6.1.1
+## 6.1.2
 * Fix pub points
+
+## 6.1.1
 * Update package dependencies 
 * Not affect current implementation
 
