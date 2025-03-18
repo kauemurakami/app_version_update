@@ -1,5 +1,6 @@
 ## 6.1.1
 * Fix pub points
+* Update package dependencies 
 * Not affect current implementation
 
 ## 6.1.0
