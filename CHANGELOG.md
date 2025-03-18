@@ -1,3 +1,7 @@
+## 6.1.1
+* Fix pub points
+* Not affect current implementation
+
 ## 6.1.0
 * Fix bug for normal versions with multiple languages
 * Not affect current implementation

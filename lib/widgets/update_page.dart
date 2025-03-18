@@ -29,16 +29,16 @@ class UpdateVersionPage extends StatelessWidget {
                   children: [
                     Text(
                       'A new version is available!',
-                      style:
-                          TextStyle(fontSize: 24.0, fontWeight: FontWeight.w600),
+                      style: TextStyle(
+                          fontSize: 24.0, fontWeight: FontWeight.w600),
                     ),
                     SizedBox(
                       height: 16.0,
                     ),
                     Text(
                       'Would you like to update your application?',
-                      style:
-                          TextStyle(fontSize: 16.0, fontWeight: FontWeight.w400),
+                      style: TextStyle(
+                          fontSize: 16.0, fontWeight: FontWeight.w400),
                     ),
                   ],
                 ),
@@ -50,7 +50,8 @@ class UpdateVersionPage extends StatelessWidget {
                           ? const SizedBox.shrink()
                           : MaterialButton(
                               minWidth: 140.0,
-                              onPressed: () => Navigator.pop(context, (route) => false),
+                              onPressed: () =>
+                                  Navigator.pop(context, (route) => false),
                               color: Colors.redAccent,
                               child: const Text(
                                 'Update Later',

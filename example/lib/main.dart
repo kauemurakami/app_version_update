@@ -36,9 +36,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _verifyVersion() async {
-    await AppVersionUpdate.checkForUpdates(appleId: '284882215', playStoreId: 'com.zhiliaoapp.musically').then((
-      result,
-    ) async {
+    await AppVersionUpdate.checkForUpdates(
+      appleId: '284882215',
+      playStoreId: 'com.zhiliaoapp.musically',
+    ).then((result) async {
       if (result.canUpdate!) {
         // await AppVersionUpdate.showBottomSheetUpdate(context: context, appVersionResult: appVersionResult)
         // await AppVersionUpdate.showPageUpdate(context: context, appVersionResult: appVersionResult)
@@ -50,9 +51,17 @@ class _MyHomePageState extends State<MyHomePage> {
           context: context,
           backgroundColor: Colors.grey[200],
           title: 'Uma versão mais recente está disponível.',
-          titleTextStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 24.0),
-          content: 'Gostaria de atualizar seu aplicativo para a versão mais recente?',
-          contentTextStyle: const TextStyle(color: Colors.black, fontWeight: FontWeight.w400),
+          titleTextStyle: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w600,
+            fontSize: 24.0,
+          ),
+          content:
+              'Gostaria de atualizar seu aplicativo para a versão mais recente?',
+          contentTextStyle: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.w400,
+          ),
           updateButtonText: 'ATUALIZAR',
           cancelButtonText: 'DEPOIS',
         );
@@ -89,7 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
-            Text('$_counter', style: Theme.of(context).textTheme.headlineMedium),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
           ],
         ),
       ),

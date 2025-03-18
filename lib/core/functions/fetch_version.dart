@@ -13,11 +13,13 @@ import 'convert_version.dart';
 /// * ```appleId``` unique identifier in Apple Store, if null, we will use your package name.
 /// * ```playStoreId``` unique identifier in Play Store, if null, we will use your package name.
 /// * ```country``` (iOS only) region of store, if null, we will use 'us'.
-Future<AppVersionData> fetchVersion({String? playStoreId, String? appleId, String? country}) async {
+Future<AppVersionData> fetchVersion(
+    {String? playStoreId, String? appleId, String? country}) async {
   final packageInfo = await PackageInfo.fromPlatform();
   AppVersionData data = AppVersionData();
   if (Platform.isAndroid) {
-    data = await fetchAndroid(packageInfo: packageInfo, playStoreId: playStoreId);
+    data =
+        await fetchAndroid(packageInfo: packageInfo, playStoreId: playStoreId);
   } else if (Platform.isIOS) {
     data = await fetchIOS(
       packageInfo: packageInfo,
@@ -27,18 +29,21 @@ Future<AppVersionData> fetchVersion({String? playStoreId, String? appleId, Strin
   } else {
     throw "Unknown platform";
   }
-  data.canUpdate = await convertVersion(version: data.localVersion, versionStore: data.storeVersion);
+  data.canUpdate = await convertVersion(
+      version: data.localVersion, versionStore: data.storeVersion);
   return data;
 }
 
-Future<AppVersionData> fetchAndroid({PackageInfo? packageInfo, String? playStoreId}) async {
+Future<AppVersionData> fetchAndroid(
+    {PackageInfo? packageInfo, String? playStoreId}) async {
   playStoreId = playStoreId ?? packageInfo?.packageName;
 
   final parameters = {
     "id": playStoreId,
   };
   var uri = Uri.https(playStoreAuthority, playStoreUndecodedPath, parameters);
-  final response = await http.get(uri, headers: headers).catchError((e) => throw e);
+  final response =
+      await http.get(uri, headers: headers).catchError((e) => throw e);
   if (response.statusCode == 200) {
     final String htmlString = response.body;
 
@@ -84,9 +89,13 @@ Future<AppVersionData> fetchAndroid({PackageInfo? packageInfo, String? playStore
   }
 }
 
-Future<AppVersionData> fetchIOS({PackageInfo? packageInfo, String? appleId, String? country}) async {
-  assert(appleId != null || packageInfo != null, 'One between appleId or packageInfo must not be null');
-  var parameters = (appleId != null) ? {"id": appleId} : {'bundleId': packageInfo?.packageName};
+Future<AppVersionData> fetchIOS(
+    {PackageInfo? packageInfo, String? appleId, String? country}) async {
+  assert(appleId != null || packageInfo != null,
+      'One between appleId or packageInfo must not be null');
+  var parameters = (appleId != null)
+      ? {"id": appleId}
+      : {'bundleId': packageInfo?.packageName};
   if (country != null) {
     parameters['country'] = country;
   }
