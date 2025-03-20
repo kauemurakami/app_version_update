@@ -1,3 +1,6 @@
+## 6.1.3
+* Fix hot reload change storeversion to localversion
+
 ## 6.1.2
 * Fix pub points
 
