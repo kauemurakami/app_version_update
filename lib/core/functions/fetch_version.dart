@@ -33,7 +33,6 @@ Future<AppVersionData> fetchVersion({String? playStoreId, String? appleId, Strin
 
 Future<AppVersionData> fetchAndroid({PackageInfo? packageInfo, String? playStoreId}) async {
   playStoreId = playStoreId ?? packageInfo?.packageName;
-
   final parameters = {
     "id": playStoreId,
   };
@@ -41,17 +40,29 @@ Future<AppVersionData> fetchAndroid({PackageInfo? packageInfo, String? playStore
   final response = await http.get(uri, headers: headers).catchError((e) => throw e);
   if (response.statusCode == 200) {
     final String htmlString = response.body;
-
     RegExp regex;
-    Iterable<RegExpMatch> matches;
+    Iterable<RegExpMatch> matches = [];
     // Use regex to find all occurrences of version in the format "]]],"<version-number>"
-    if (htmlString.contains('version')) {
+    if (htmlString.contains('null,[[["')) {
+      // Captura o formato null,[[["X.X.X"]]]
+      regex = RegExp(r'null,\[\[\["([\d\.]+)"\]\]\]');
+      matches = regex.allMatches(htmlString);
+    }
+
+// Se não encontrou no formato `null,[[["X.X.X"]]]`, verifica `Version X.X.X`
+    if (matches.isEmpty && htmlString.contains('Version')) {
+      regex = RegExp(r'<div itemprop="description">Version ([\d\.]+)<br>');
+      matches = regex.allMatches(htmlString);
+    }
+
+// Se ainda não encontrou, verifica qualquer `X.X.X`
+    if (matches.isEmpty && htmlString.contains('version')) {
       regex = RegExp(r'(\d+\.\d+\.\d+)');
       matches = regex.allMatches(htmlString);
-    } else if (packageInfo!.version.split('.').length == 3) {
-      regex = RegExp(r'"\]\]\],null,null,null,\[\[\["(.*?)"\]\]\]');
-      matches = regex.allMatches(htmlString);
-    } else {
+    }
+
+// Caso geral (se nenhuma das anteriores encontrar)
+    if (matches.isEmpty) {
       regex = RegExp(r'"\]\]\],"(.*?)"');
       matches = regex.allMatches(htmlString);
     }
@@ -59,7 +70,7 @@ Future<AppVersionData> fetchAndroid({PackageInfo? packageInfo, String? playStore
     // Extract the last version found
     if (matches.isNotEmpty) {
       final lastMatch = matches.last;
-      String? lastVersion = lastMatch.group(0);
+      String? lastVersion = lastMatch.group(1);
       lastVersion = lastVersion!.split('"').first;
       if (kDebugMode) {
         print(
