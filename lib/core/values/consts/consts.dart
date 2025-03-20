@@ -1,5 +1,10 @@
 /// header for requests.
-const headers = {'Content-type': 'text/plain'};
+const headers = {
+  "Content-type": "text/plain",
+  "Cache-Control": "no-cache",
+  "Pragma": "no-cache",
+  "Expires": "0",
+};
 
 /// play store url string.
 const playStoreAuthority = 'play.google.com';
