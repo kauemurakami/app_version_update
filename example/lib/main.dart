@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _verifyVersion() async {
     await AppVersionUpdate.checkForUpdates(
       appleId: '284882215',
-      playStoreId: 'net.archethic.archethic_wallet',
+      playStoreId: 'com.zhiliaoapp.musically',
     ).then((result) async {
       if (result.canUpdate!) {
         // await AppVersionUpdate.showBottomSheetUpdate(context: context, appVersionResult: appVersionResult)
