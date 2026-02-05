@@ -40,62 +40,64 @@ class UpdateVersionDialog extends Container {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
-      backgroundColor: backgroundColor!,
-      title: Text(
-        title!,
-        style: titleTextStyle ??
-            const TextStyle(
-                color: Colors.black,
-                fontSize: 20.0,
-                fontWeight: FontWeight.w700),
-      ),
-      content: Text(
-        content!,
-        style: contentTextStyle ??
-            const TextStyle(
-              color: Colors.black,
-              fontSize: 16.0,
-              fontWeight: FontWeight.w400,
-            ),
-      ),
-      actions: [
-        mandatory && !updated
-            ? const SizedBox.shrink()
-            : TextButton(
-                style: cancelButtonStyle,
-                onPressed: () => Navigator.pop(context),
-                child: Text(
-                  cancelButtonText!,
-                  style: cancelTextStyle,
-                ),
-              ),
-        TextButton(
-          style: updateButtonStyle,
-          onPressed: () async {
-            await launchUrl(
-              Uri.parse(
-                appVersionResult!.storeUrl!,
-              ),
-              mode: LaunchMode.externalApplication,
-            );
-            if (mandatory && !updated) {
-              await AppVersionUpdate.checkForUpdates(
-                appleId: appVersionResult!.appleId,
-                playStoreId: appVersionResult!.playStoreId,
-              ).then((checkIfUpdated) {
-                if (!checkIfUpdated.canUpdate!) {
-                  updated = true;
-                }
-              });
-            }
-          },
-          child: Text(
-            updateButtonText!,
-            style: updateTextStyle,
+    return PopScope(
+        canPop: !mandatory,
+        child: AlertDialog(
+          backgroundColor: backgroundColor!,
+          title: Text(
+            title!,
+            style: titleTextStyle ??
+                const TextStyle(
+                    color: Colors.black,
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w700),
           ),
-        )
-      ],
-    );
+          content: Text(
+            content!,
+            style: contentTextStyle ??
+                const TextStyle(
+                  color: Colors.black,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w400,
+                ),
+          ),
+          actions: [
+            mandatory && !updated
+                ? const SizedBox.shrink()
+                : TextButton(
+                    style: cancelButtonStyle,
+                    onPressed: () => Navigator.pop(context),
+                    child: Text(
+                      cancelButtonText!,
+                      style: cancelTextStyle,
+                    ),
+                  ),
+            TextButton(
+              style: updateButtonStyle,
+              onPressed: () async {
+                await launchUrl(
+                  Uri.parse(
+                    appVersionResult!.storeUrl!,
+                  ),
+                  mode: LaunchMode.externalApplication,
+                );
+                if (mandatory && !updated) {
+                  await AppVersionUpdate.checkForUpdates(
+                    appleId: appVersionResult!.appleId,
+                    playStoreId: appVersionResult!.playStoreId,
+                  ).then((checkIfUpdated) {
+                    if (!checkIfUpdated.canUpdate!) {
+                      updated = true;
+                    }
+                  });
+                }
+              },
+              child: Text(
+                updateButtonText!,
+                style: updateTextStyle,
+              ),
+            )
+          ],
+        ));
   }
 }
