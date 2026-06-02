@@ -1,3 +1,8 @@
+## 7.0.0
+* Refact scraping to play Store
+* Upgrade package dependencies, excludo necessity of use `override_pacakges`
+* And more informations aboute google manage yours versions. [See this discussion](https://github.com/kauemurakami/app_version_update/discussions/67)
+
 ## 6.1.3
 * Fix hot reload change storeversion to localversion
 
