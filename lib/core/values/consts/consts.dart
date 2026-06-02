@@ -12,5 +12,5 @@ const playStoreAuthority = 'play.google.com';
 /// play store lookup url string.
 const playStoreUndecodedPath = '/store/apps/details';
 
-/// play store url string.
+/// apple store url string.
 const appleStoreAuthority = 'itunes.apple.com';

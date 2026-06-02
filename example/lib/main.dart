@@ -41,10 +41,10 @@ class _MyHomePageState extends State<MyHomePage> {
       playStoreId: 'com.zhiliaoapp.musically',
     ).then((result) async {
       if (result.canUpdate!) {
+        print(result.storeVersion);
         // await AppVersionUpdate.showBottomSheetUpdate(context: context, appVersionResult: appVersionResult)
         // await AppVersionUpdate.showPageUpdate(context: context, appVersionResult: appVersionResult)
         // or use your own widget with information received from AppVersionResult
-
         //##############################################################################################
         await AppVersionUpdate.showAlertUpdate(
           appVersionResult: result,

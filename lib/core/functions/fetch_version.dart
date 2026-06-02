@@ -34,86 +34,74 @@ Future<AppVersionData> fetchVersion(
   return data;
 }
 
-Future<AppVersionData> fetchAndroid(
-    {PackageInfo? packageInfo, String? playStoreId}) async {
+Future<AppVersionData> fetchAndroid({
+  PackageInfo? packageInfo,
+  String? playStoreId,
+}) async {
   playStoreId = playStoreId ?? packageInfo?.packageName;
-  final parameters = {
-    "id": playStoreId,
-  };
+
+  final parameters = {"id": playStoreId};
+  // DICA: Forçar o local 'en' ajuda a manter a estrutura do HTML previsível
   var uri = Uri.https(playStoreAuthority, playStoreUndecodedPath, parameters);
+
   final response =
       await http.get(uri, headers: headers).catchError((e) => throw e);
+
   if (response.statusCode == 200) {
     final String htmlString = response.body;
-    RegExp regex;
-    Iterable<RegExpMatch> matches = [];
-    if (htmlString.contains('null,[[["')) {
-      regex = RegExp(r'null,\[\[\["([\d\.]+)"\]\]\]');
-      matches = regex.allMatches(htmlString);
-    }
 
-    if (matches.isEmpty && htmlString.contains('Version')) {
-      regex = RegExp(r'<div itemprop="description">Version ([\d\.]+)<br>');
-      matches = regex.allMatches(htmlString);
-    }
-
-    if (matches.isEmpty && htmlString.contains('version')) {
-      regex = RegExp(r'(\d+\.\d+\.\d+)');
-      matches = regex.allMatches(htmlString);
-    }
-
-    if (matches.isEmpty) {
-      regex = RegExp(r'"\]\]\],"(.*?)"');
-      matches = regex.allMatches(htmlString);
-    }
+    // 1. Regex ultra-focado: captura qualquer string de versão que esteja isolada por aspas
+    // dentro dos blocos de dados, suportando formatos normais (1.0.2) e Meta/Facebook (563.1.0.50.73)
+    final RegExp versionRegex = RegExp(r'"(\d+\.\d+\.\d+[^"]*)"');
+    final matches = versionRegex.allMatches(htmlString);
 
     if (matches.isNotEmpty) {
-      // matchList.sort((a, b) {
-      //   String versionA = a.group(1)!;
-      //   String versionB = b.group(1)!;
+      List<String> detectedVersions = [];
 
-      //   // Ignora a versão "24.04.47" durante a comparação
-      //   if (versionA == '24.04.47') return 1; // Coloca a versão "24.04.47" depois
-      //   if (versionB == '24.04.47') return -1; // Coloca a versão "24.04.47" depois
+      for (var match in matches) {
+        String version = match.group(1)!;
 
-      //   List<int> versionToList(String version) {
-      //     return version.split('.').map((part) => int.parse(part)).toList();
-      //   }
+        // Filtros para evitar pegar IDs grandes, datas ou strings com letras perdidas
+        if (version.length < 18 &&
+            !version.contains(',') &&
+            !version.contains('/') &&
+            RegExp(r'^\d').hasMatch(version)) {
+          // Garante que começa com número
+          detectedVersions.add(version);
+        }
+      }
 
-      //   List<int> listA = versionToList(versionA);
-      //   List<int> listB = versionToList(versionB);
+      if (detectedVersions.isNotEmpty) {
+        // A versão do app costuma aparecer primeiro ou repetidas vezes no bloco de metadados.
+        // Se a primeira falhar no seu teste, você pode testar detectedVersions[1] ou [2]
+        String lastVersion = detectedVersions.first;
 
-      //   for (int i = 0; i < listA.length; i++) {
-      //     if (listA[i] > listB[i]) return -1;
-      //     if (listA[i] < listB[i]) return 1;
-      //   }
-      //   return 0;
-      // });
-
-      // Agora, 'matchList' tem a versão mais recente no início
-      // Remover todos os matches exceto o primeiro (o mais recente)
-      // matches = [matchList.first];
-
-      final lastMatch = matches.last;
-      String? lastVersion = lastMatch.group(1);
-      lastVersion = lastVersion!.split('"').first;
-      if (kDebugMode) {
-        print(
-          'Local version ${packageInfo!.version} Store version: $lastVersion',
+        return AppVersionData(
+          storeVersion: lastVersion,
+          storeUrl: uri.toString(),
+          localVersion: packageInfo?.version ?? "0.0.0",
+          targetPlatform: TargetPlatform.android,
         );
       }
+    }
+
+    // 2. Fallback multilíngue (independe se está em inglês, português ou espanhol)
+    final fallbackRegex =
+        RegExp(r'(?:version|versão|versión).*?([\d\.]+)', caseSensitive: false);
+    final fallbackMatch = fallbackRegex.firstMatch(htmlString);
+
+    if (fallbackMatch != null) {
       return AppVersionData(
-        // canUpdate: packageInfo.version < lastVersion ? true : false,
-        storeVersion: lastVersion,
+        storeVersion: fallbackMatch.group(1)!,
         storeUrl: uri.toString(),
-        localVersion: packageInfo!.version,
+        localVersion: packageInfo?.version ?? "0.0.0",
         targetPlatform: TargetPlatform.android,
       );
-    } else {
-      throw "Application not found in Play Store, verify your app id.";
     }
+
+    throw "Application not found in Play Store or layout changed, verify your app id.";
   } else {
-    throw "Application not found in Play Store, verify your app id.";
+    throw "Application not found in Play Store, verify your app id. Status: ${response.statusCode}";
   }
 }
 
@@ -127,9 +115,9 @@ Future<AppVersionData> fetchIOS(
   if (country != null) {
     parameters['country'] = country;
   }
-  parameters['version'] = '2';
   var uri = Uri.https(appleStoreAuthority, '/lookup', parameters);
   final response = await http.get(uri, headers: headers);
+
   if (response.statusCode == 200) {
     final jsonResult = json.decode(response.body);
     final List results = jsonResult['results'];
